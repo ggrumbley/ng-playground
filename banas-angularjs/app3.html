@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html ng-app="app3" ng-cloak>
+  <head>
+    <title>AngularJS | App3</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="groceryList" ng-controller="gListCtrl as vm">
+      <h3 class="ListTitle">{{vm.groceries.length}} Groceries to Get</h3>
+      <h3 class="ListTitle"><span ng-bind="vm.groceries.length"></span> Groceries to Get</h3>
+
+      <ol style="margin: 0 0 -15px 0;">
+        <li>{{vm.groceries[0].item}}</li>
+      </ol>
+      <!-- List the rest of the groceries and skip the 1st index value. ng-repeat contains variables you can use such as $index, $first (true) if first item, $last (true if last item), $middle (true if not 1st or last), $even (true if even), $odd (true if odd) -->
+      <ol start="2">
+        <li ng-repeat = "grocery in vm.groceries"
+          ng-if="$index > 0">
+          {{grocery.item}} {{$index}}
+        </li>
+      </ol>
+
+      <!-- ng-repeat-start and ng-repeat-end allow us to use ng-repeat on 2 elements rather then on just one -->
+      <table>
+      <tr ng-repeat-start="grocery in vm.groceries">
+        <td>
+          {{grocery.item}}
+        </td>
+        <tr ng-repeat-end>
+          <td>
+            {{grocery.purchased}}
+          </td>
+        </tr>
+      </table>
+
+      <!-- 2 way binding allows the user to change the data
+      model -->
+      <label>Change 1st Item : </label>
+      <input ng-model="vm.groceries[0].item" />
+
+      <!-- ng-include inputs a HTML fragment into a page. If you get the error "Cross origin requests are only supported for protocol schemes" that is because this page must be served from a server.  -->
+      <h3>Grocery List</h3>
+      <div ng-include="'_grocerylist.html'"></div>
+
+      <!-- We can also dynamically load different HTML partials -->
+      <label>
+        <!-- showList will represent the HTML returned -->
+        <input type="checkbox" ng-model="vm.showList">
+        Show Unordered List
+      </label>
+      <ng-include src="vm.getList()"></ng-include>
+
+      <!-- ng-switch allows us to conditionally insert or remove an element in the document -->
+      <label>Type a number (1 to 4):
+        <input type="text" ng-model="someNumber" />
+      </label>
+      <div ng-switch="someNumber">
+        <p ng-switch-when="1">You entered 1</p>
+        <p ng-switch-when="2">You entered 2</p>
+        <p ng-switch-when="3">You entered 3</p>
+        <p ng-switch-when="4">You entered 4</p>
+        <p ng-switch-default="1">Not Following Directions</p>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app3', [])
+        .controller('gListCtrl', gListCtrl);
+
+      function gListCtrl() {
+        let vm = this;
+
+        vm.groceries = [
+          {item: "Tomatoes", purchased: false},
+          {item: "Potatoes", purchased: false},
+          {item: "Bread", purchased: false},
+          {item: "Hummus", purchased: false}
+        ]
+
+        vm.getList = function () {
+          return vm.showList ? '_ulgrocerylist.html': '_grocerylist.html';
+        }
+      }
+    </script>
+  </body>
+</html>

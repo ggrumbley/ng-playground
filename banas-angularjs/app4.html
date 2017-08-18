@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="app4" ng-cloak>
+  <head>
+    <title>AngularJS | App4</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .bluetext {
+        color:blue;
+      }
+      .boldtext {
+        font-weight: bold;
+      }
+      .stripedblue {
+        color:#007FFF;
+        background-color:#DBE9F4;
+      }
+      .stripedbeige {
+        color:#CC0000;
+        background-color:#F5F5DC;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div ng-controller="eventCtrl as vm">
+      <input
+        ng-blur="vm.blur = vm.blur + 1"
+        ng-click="vm.click = vm.click + 1"
+        ng-dblclick="vm.dblclick = vm.dblclick + 1"
+        ng-copy="vm.copy = vm.copy + 1"
+        ng-paste="vm.paste = vm.paste + 1"
+        ng-cut="vm.cut = vm.cut + 1"
+        ng-focus="vm.focus = vm.focus + 1"
+        ng-model="vm.confirmed"
+        ng-change="vm.change = vm.change + 1"
+        ng-keydown="vm.keydown($event)"
+        ng-mouseenter="vm.mouseenter = vm.mouseenter + 1"
+        ng-mouseleave="vm.mouseleave = vm.mouseleave + 1"
+      />
+      <h4>Blur Events : {{vm.blur}}</h4>
+      <h4>Click Events : {{vm.click}}</h4>
+      <h4>Double Click Events : {{vm.dblclick}}</h4>
+      <h4>Copy Events : {{vm.copy}}</h4>
+      <h4>Paste Events : {{vm.paste}}</h4>
+      <h4>Cut Events : {{vm.cut}}</h4>
+      <h4>Focus Events : {{vm.focus}}</h4>
+      <h4>Change Events : {{vm.change}}</h4>
+
+      <!-- There is also keypress and keyup -->
+      <h4>Key Pressed : {{vm.kdKey}}</h4>
+
+      <!-- There is also mousedown, mousemove, mouseover and mouseup -->
+      <h4>Mouse Enter Events : {{vm.mouseenter}}</h4>
+      <h4>Mouse Leave Events : {{vm.mouseleave}}</h4>
+      <!-- We can disable and inable elements -->
+      <p>
+          <button ng-disabled="vm.disableButton">Button</button>
+        </p>
+        <p>
+          <input type="checkbox" ng-model="vm.disableButton">Disable Button
+        </p>
+
+        <!-- We can hide and show elements -->
+        <p>
+          <input type="checkbox" ng-model="vm.daytimeButton">Morning
+        </p>
+        <p ng-hide="!vm.daytimeButton">Good Morning</p>
+        <p ng-hide="vm.daytimeButton">Good Evening</p>
+
+        <!-- We can dynamically change a class -->
+        <p>
+          <select ng-model="textStyling">
+            <option value="bluetext">Blue Text</option>
+            <option value="boldtext">Bold Text</option>
+          </select>
+        </p>
+        <p ng-class="textStyling">Some Random Text</p>
+
+      <!-- We can bind classes on even elements with ng-class-even and/or ng-class-odd -->
+      <table>
+          <tr ng-repeat="item in vm.capitals" ng-class-even="'stripedblue'"
+          ng-class-odd="'stripedbeige'">
+            <td>{{item.City}}</td>
+            <td>{{item.State}}</td>
+          </tr>
+        </table>
+      </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app4', [])
+        .controller('eventCtrl', eventCtrl);
+
+      function eventCtrl() {
+        let vm = this;
+        vm.blur = 0;
+        vm.click = 0;
+        vm.dblclick = 0;
+        vm.copy = 0;
+        vm.paste = 0;
+        vm.cut = 0;
+        vm.focus = 0;
+        vm.change = 0;
+        vm.keydown = function(e) {
+          // Works for the basic characters and numbers
+          vm.kdKey = String.fromCharCode(e.keyCode);
+        };
+        vm.mouseenter = 0;
+        vm.mouseleave = 0;
+
+        // Used to disable button
+        vm.disableButton = true;
+
+        // Used to show and hide elements
+        vm.daytimeButton = true;
+
+        // Used for table
+        vm.capitals = [
+          {"City": "Montgomery",
+          "State": "Alabama"},
+          {"City": "Juneau",
+          "State": "Alaska"},
+          {"City": "Phoenix",
+          "State": "Arizona"},
+          {"City": "Little Rock",
+          "State": "Arkansas"}
+        ];
+      }
+    </script>
+  </body>
+</html>

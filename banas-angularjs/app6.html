@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="app6" ng-cloak>
+  <head>
+    <title>AngularJS | app6</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+
+    <div ng-controller="heroCtrl as vm">
+      <label>Hero to search for : </label>
+      <input type="text" ng-model="vm.heroName" />
+      <br>
+      <button ng-click="vm.getHeroData()">Submit</button>
+      <br>
+
+      {{vm.heroData}} <br>
+    </div>
+
+    <div ng-controller="heroCtrl as vm">
+      <label>Hero Name: </label>
+      <input type="text" ng-model="vm.heroName">
+      <br>
+      <label for="">Real Name: </label>
+      <input type="text" ng-model="vm.realName">
+      <br>
+      <button ng-click="vm.addHeroData(vm.realName, vm.heroName)">Add</button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app6', [])
+        .controller('heroCtrl', heroCtrl);
+
+      function heroCtrl($scope, $rootScope) {
+        let vm = this;
+
+        vm.hero = [
+          {realName: "Bruce Wayne", heroName: "Batman"},
+          {realName: "Clark Kent", heroName: "Superman"},
+        ];
+
+        vm.getHeroData = function() {
+          heroSearch(vm.heroName);
+        }
+
+        function heroSearch(name) {
+          vm.heroData = "Not Found";
+          for (let i = 0; i < vm.hero.length; i++) {
+            if (vm.hero[i].heroName === name) {
+              vm.heroData = vm.hero[i].realName + " is " + vm.hero[i].heroName;
+            }
+
+          }
+        }
+
+        $scope.$on("heroUpdated", function(event, args) {
+          console.log("Real : " + args.realName + " Hero : " + args.heroName);
+          vm.hero.push({
+            realName: args.realName, heroName: args.heroName
+          });
+        });
+
+        vm.addHeroData = function(realName, heroName) {
+          $rootScope.$broadcast("heroUpdated",
+          {
+            realName: realName, heroName: heroName
+          });
+          console.log(`Real : ${realName} Hero : ${heroName}`);
+        }
+      }
+    </script>
+  </body>
+</html>

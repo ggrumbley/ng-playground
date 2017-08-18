@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html ng-app="app8" ng-cloak>
+  <head>
+    <title>AngularJS | app8</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <!-- Filters transform data in the view without altering it in the scope using the pipe character -->
+    <div ng-controller="mainCtrl as vm">
+
+      <!-- Uppercase -->
+      <label>Make Uppercase : </label>
+      <input type="text" ng-model="vm.name">
+      <p>Uppercase : {{vm.name | uppercase}}</p>
+
+      <!-- Lowercase -->
+      <p>Lowercase : {{vm.name | lowercase}}</p>
+
+      <!-- Currency Filter -->
+      <label>Currency Filter : </label>
+      <input type="text" ng-model="vm.money">
+      <p>Uppercase : {{vm.money | currency}}</p>
+
+      <!-- Filter filter
+      Change the order direction by putting -gpa -->
+      <ul>
+        <li ng-repeat = "student in vm.student.gpas | filter: studentName |orderBy:'gpa'">
+          {{ 'Name: ' + student.name + ' : GPA: ' + student.gpa }}
+        </li>
+      </ul>
+
+      <!-- Number Filter -->
+      <label>Number Filter : </label>
+      <input type="text" ng-model="vm.numVal">
+      <p>Default : {{vm.numVal | number}}</p>
+      <p>No Fractions : {{vm.numVal | number:0}}</p>
+      <p>Negative 4 Decimals : {{- vm.numVal | number:4}}</p>
+
+      <!-- Date Filter https://docs.angularjs.org/api/ng/filter/date -->
+      <p>Date 1 : {{vm.currDate | date:'medium'}}</p>
+      <p>Date 2 : {{vm.currDate | date:"MM/dd/yyyy 'at' h:mma"}}</p>
+
+      <!-- LimitTo Filter -->
+      <p>Default : {{vm.randomStr}}</p>
+      <p>10 Characters : {{vm.randomStr | limitTo:10}}</p>
+      <p>
+        <ul>
+          <li ng-repeat="item in vm.randArray | limitTo:3">
+            {{item}}
+          </li>
+        </ul>
+      </p>
+
+      <!-- Custom Filter
+      Different unicode characters are returned based on if item.rain
+      has the value of true or false -->
+      <p>
+        <ul>
+          <li ng-repeat="item in vm.weather">
+            {{item.day + " : "}} {{item.rain | raining}}
+          </li>
+        </ul>
+      </p>
+
+      </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app8', ['weatherFilters'])
+        .controller('mainCtrl', mainCtrl);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.students = [
+          {name: "George Thomas", gpa: 3.5},
+          {name: "Susy Smith", gpa: 3.6},
+          {name: "Paul Marks", gpa: 3.2},
+          {name: "Sue Edgar", gpa: 3.8}
+        ];
+
+        vm.student = {
+            gpas:[
+              {name: "George Thomas", gpa: 3.5},
+              {name: "Susy Smith", gpa: 3.6},
+              {name: "Paul Marks", gpa: 3.2},
+              {name: "Sue Edgar", gpa: 3.8}
+            ]
+        };
+
+        vm.currDate = new Date();
+
+        vm.randomStr = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+
+        vm.randArray = [
+          "Tomato",
+          "Potato",
+          "Bread",
+          "Pickles",
+          "Raisins"
+        ];
+
+        vm.weather = [
+          {day: "Monday", rain: false},
+          {day: "Tuesday", rain: true}
+        ];
+      }
+    </script>
+    <script src="./filters.js"></script>
+  </body>
+</html>

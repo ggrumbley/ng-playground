@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="app9" ng-cloak>
+  <head>
+    <title>AngularJS | app9</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div ng-controller="mainCtrl as vm">
+      <ul jql-directive>
+        <li id="barry">Barry Bonds</li>
+        <ul>
+          <li>AVG : .298
+          <li>HR : 762
+          <li>OBP : .444
+        </ul>
+        <li id="hank">Hank Aaron</li>
+        <ul>
+          <li>AVG : .305
+          <li>HR : 755
+          <li>OBP : .374
+        </ul>
+        <li>Babe Ruth</li>
+        <ul>
+          <li>AVG : .342
+          <li>HR : 714
+          <li>OBP : .474
+        </ul>
+      </ul>
+
+      <h4>Children in List</h4>
+      <span id="childrenList"></span><br><br>
+      Barry's Number: <span id="barrysNum"></span><br><br>
+      Is Hank Bold: <span id="hankBold"></span><br><br>
+      Barry's ID: <span id="barryID"></span><br><br>
+      <button ng-click="vm.unBold()">Toggle Bold</button>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app9', [])
+        .directive('jqlDirective', jqlDirective)
+        .controller('mainCtrl', mainCtrl);
+
+      function jqlDirective() {
+        return function(scope, element, attrs) {
+          const players = element.children();
+
+          let listOfPlayers = "";
+
+          for (let i = 0; i < players.length; i++) {
+            if (players.eq(i).text() == "Barry Bonds") {
+              players.eq(i).css("color", "red");
+
+              players.eq(i).attr("number", "25");
+            }
+
+            if (players.eq(i).text() == "Hank Aaron") {
+              players.eq(i).addClass("thick");
+            }
+            listOfPlayers += players.eq(i).text() + ", ";
+          }
+          angular
+            .element(document.querySelector('#childrenList'))
+            .text(listOfPlayers);
+
+          // Get the value of an attribute
+          const barrysNum = angular
+                              .element(document.querySelector('#barry'))
+                              .attr("number");
+
+          // Set the value of the attribute to the span
+          angular
+            .element(document.querySelector('#barrysNum'))
+            .text(barrysNum);
+
+          // Remove a class
+          // You can remove an attribute with removeAttr
+          angular
+            .element(document.querySelector('#hank'))
+            .removeClass("thick");
+
+          // Find out if an element has a class
+          const isHankBold = angular
+                            .element(document.querySelector('#hank'))
+                            .hasClass("thick");
+
+          // Set the value in a span
+          angular
+            .element(document.querySelector('#hankBold'))
+            .text(isHankBold);
+
+          // Get the value of a property
+          // Set a property with .prop("name", "value")
+          const barryID = angular
+                          .element(document.querySelector('#barry'))
+                          .prop("id");
+
+          // Set the value in a span
+          angular
+            .element(document.querySelector('#barryID'))
+            .text(barryID);
+        }
+      }
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.unBold = function() {
+          angular
+            .element(document.querySelector('#hank'))
+            .toggleClass("thick");
+        }
+      }
+    </script>
+  </body>
+</html>

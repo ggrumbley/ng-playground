@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="app2">
+  <head>
+    <title>AngularJS | App2</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h4 ng-controller="ctrl1 as vm">First Random Number : {{vm.randomNum1}}</h4>
+    <h4 ng-controller="ctrl1 as vm">Second Random Number : {{vm.randomNum2}}</h4>
+    <h4 ng-controller="badCtrl as vm">I'm feeling {{vm.bad}}</h4>
+    <h4 ng-controller="goodCtrl as vm">I'm feeling {{vm.good}}</h4>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app2', [])
+        .controller('ctrl1', ctrl1)
+        .controller('badCtrl', badCtrl)
+        .controller('goodCtrl', goodCtrl);
+
+      function ctrl1() {
+        let vm = this;
+
+        vm.randomNum1 = Math.floor((Math.random() * 10) + 1);
+        vm.randomNum2 = Math.floor((Math.random() * 10) + 1);
+      }
+
+
+      function badCtrl() {
+        let vm = this;
+
+        let badFeelings = ['Disregarded', 'Unimportant', 'Rejected', 'Powerless'];
+
+        vm.bad = badFeelings[Math.floor((Math.random() * 4))];
+      }
+
+      function goodCtrl() {
+        let vm = this;
+
+        let goodFeelings = ["Pleasure", "Awesome", "Lovable", "Inner Peace"];
+
+        vm.good = goodFeelings[Math.floor((Math.random() * 4))];
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="app7" ng-cloak>
+  <head>
+    <title>AngularJS | app7</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <!-- Demonstrating how to use controller inheritance -->
+    <div ng-controller="mainCtrl as parent">
+
+      <!-- Display parent data -->
+      <p>Name : {{parent.name}}</p>
+      <p>Sound : {{parent.sound}}</p>
+      <button ng-click=parent.animalClick()>Animal Data</button><br>
+    </div>
+
+    <div ng-controller="dogCtrl as dog">
+      <p>Name : {{dog.child.name}}</p>
+      <p>Sound : {{dog.child.sound}}</p>
+
+      <!-- Call the parent method using the dog fields -->
+      <button ng-click=dog.child.animalClick()>Dog Data</button><br><br>
+
+      <!-- Call the dog method -->
+      <button ng-click=dog.child.dogData()>More Dog Data</button><br><br>
+
+        <!-- Change a field value -->
+        <input ng-model="dog.child.bark" /><br><br>
+      <span>New Bark : {{dog.child.bark}}</span>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app7', [])
+        .controller('mainCtrl', mainCtrl)
+        .controller('dogCtrl', dogCtrl);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.name = "Animal";
+        vm.sound = "Grrr";
+
+        vm.animalClick = function() {
+          alert(vm.name + " says " + vm.sound);
+        };
+      };
+
+      function dogCtrl($controller) {
+        const vm = this;
+
+        vm.child = $controller('mainCtrl', {});
+        vm.child.name = "Dog";
+        vm.child.bark = "Woof";
+        vm.child.dogData = function () {
+          alert(`${this.name} says ${this.sound} and ${this.bark}`);
+        }
+      }
+    </script>
+  </body>
+</html>
