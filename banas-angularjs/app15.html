@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="app15" ng-cloak>
+  <head>
+    <title>AngularJS | app15</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div ng-controller="mainCtrl as vm">
+      <button ng-click="vm.getData()">Get Data</button>
+      <br><br>
+
+      <!-- Display raw JSON -->
+      {{vm.players}}
+
+      <!-- Put JSON in a list -->
+      <ul>
+        <li ng-repeat="player in vm.players">
+          {{ player.name + " hit " + player.hr +
+          " Home Runs"}}
+        </li>
+      </ul>
+      <br>
+      Translate :
+      <input type="text" ng-model="vm.wordsToTranslate"/>
+      <br><br>
+      <button ng-click="vm.translate()">Translate</button>
+      <br><br>
+      {{vm.translated}}
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app15', [])
+        .controller('mainCtrl', mainCtrl)
+
+      function mainCtrl($http) {
+        const vm = this;
+
+        // Get data from the json file and display it
+        vm.getData = function() {
+          $http.get("player-data.json").then(
+            function(data){
+              vm.players = data.data;
+            }
+          );
+        }
+
+        // Get this Chrome extension if you get the
+        // CORS error
+        // Allow-Control-Allow-Origin
+        vm.translate = function() {
+          const words = vm.wordsToTranslate.replace(/ /g,"+");
+
+          const jsonUrl = "http://newjustin.com/translateit.php?action=translations&english_words=" + words;
+
+          $http.get(jsonUrl).then(
+            function(data){
+              vm.translated = data.data;
+            }
+          );
+
+        }
+      }
+    </script>
+  </body>
+</html>

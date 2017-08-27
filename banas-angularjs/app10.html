@@ -11,15 +11,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
+    <div ng-controller="mainCtrl">
+      <div
+        bb-player-list="bbPlayers"
+        array-item="name | uppercase">
 
+      </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script>
       angular
         .module('app10', [])
-        .controller('ctrl1', ctrl1);
+        .directive('bbPlayerList', bbPlayerList)
+        .controller('mainCtrl', mainCtrl);
 
-      function ctrl1() {
+      function bbPlayerList() {
+        return function(scope, element, attrs) {
+          const data = scope[attrs['bbPlayerList']];
 
+          if (angular.isArray(data)) {
+            const arrayItem = attrs["arrayItem"];
+
+            const listElem = angular.element("<ul>");
+
+            element.append(listElem);
+
+            for (let i = 0; i < data.length; i++) {
+              listElem.append(angular.element('<li>')
+                .text(scope.$eval(arrayItem, data[i])));
+            }
+
+            // Add a span after the list
+            listElem.after(angular.element("<span id='mays'>").text("Willy Mays"));
+
+            // Add a span before the list
+            listElem.prepend(angular.element("<span id='cobb'>").text("Ty Cobb"));
+
+            // Remove an element
+            angular
+              .element(document.querySelector('#mays'))
+              .remove();
+
+            // Replace an element
+            var gehrigHTML = "<span id='gehrig'>Lou Gehrig</span>";
+            var replacement = angular.element(gehrigHTML);
+            angular
+              .element(document.querySelector('#cobb'))
+              .replaceWith(replacement);
+          }
+        }
+      }
+
+      function mainCtrl($scope) {
+        const vm = this;
+
+        $scope.bbPlayers = [
+          {name: "Barry Bonds", avg: 0.298, hr: 762, obp: 0.444},
+          {name: "Hank Aaron", avg: 0.305, hr: 755, obp: 0.374},
+          {name: "Babe Ruth", avg: 0.342, hr: 714, obp: 0.474},
+          {name: "Ted Williams", avg: 0.344, hr: 521, obp: 0.482}
+        ];
       }
     </script>
   </body>

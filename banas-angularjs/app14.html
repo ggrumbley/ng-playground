@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html ng-app="app14" ng-cloak>
+  <head>
+    <title>AngularJS | app14</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div ng-controller="mainCtrl as vm">
+
+      <!-- Demonstrate $window -->
+      <input type="text" ng-model="userName" />
+      <button ng-click="vm.greetUser(userName)">Hello</button>
+      <br><br>
+
+      <!-- Demonstrate $location -->
+      URL : {{vm.currURL}}
+      <br><br>
+
+      Protocol : {{vm.theProtocol}}
+      <br><br>
+
+      Host : {{vm.currHost}}
+      <br><br>
+
+      Port : {{vm.currPort}}
+      <br><br>
+
+      Path : {{vm.currPath}}
+      <br><br>
+
+      Search : {{vm.currSearch}}
+      <br><br>
+
+      <!-- Updates time using $interval -->
+      Current Time : {{vm.time}}
+      <br><br>
+
+      <!-- The $log service -->
+      <label>Message:
+        <input type="text" ng-model="message" /></label>
+        <button ng-click="vm.log.log(message)">log</button>
+        <button ng-click="vm.log.warn(message)">warn</button>
+        <button ng-click="vm.log.info(message)">info</button>
+        <button ng-click="vm.log.error(message)">error</button>
+        <button ng-click="vm.log.debug(message)">debug</button>
+        <br><br>
+
+        <!-- The $exceptionHandler service -->
+        <button ng-click="vm.throwException()">Throw Exception</button>
+        <br><br>
+
+        <!-- Angular automatically replaces < and > that is entered by the user to keep them from entering dangerous HTML. <p onmouseover=alert('Doing Bad Stuff')>Do Bad Stuff</p> isn't displayed as HTML unless you use ng-bind-html, but even then onmouseover is stripped away. -->
+
+        <input type="text" ng-model="vm.badStuff"/>
+        <br><br>
+        <span>{{vm.badStuff}}</span>
+        <span ng-bind-html="vm.badStuff"></span>
+        <span ng-bind="vm.badStuff"></span>
+        <br>
+
+        <!-- $compile service -->
+        <p get-player-info></p>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.6/angular-sanitize.min.js"></script>
+
+    <script>
+      angular
+        .module('app14', ['ngSanitize'])
+        .directive('getPlayerInfo', getPlayerInfo)
+        .controller('mainCtrl', mainCtrl)
+
+      function getPlayerInfo($compile) {
+        return function(scope, element, attrs){
+
+          // The template
+          const playerList = "<ul><li ng-repeat='player in vm.players'>{{player.name}}</li></ul>";
+
+          // Wrap it in a jqLite object
+          const listElem = angular.element(playerList);
+
+          // Create the compile function which
+          // generates are HTML
+          const compileFunc = $compile(listElem);
+
+          // Process our content
+          compileFunc(scope);
+
+          // Update our jqLite object and add it to the
+          // document
+          element.append(listElem);
+
+        }
+      }
+
+      function mainCtrl($scope, $window, $location, $interval, $log, $exceptionHandler, $sanitize) {
+        const vm = this;
+
+        vm.greetUser = function(userName) {
+          $window.alert(`Hello there, ${userName}`);
+        }
+
+        // The $document service is an object that
+        // represents the window.document object, but
+        // normally if you want to minipulate elements
+        // you'll use angular.element instead
+
+        // $location is a service that provides access
+        // to the current URL and can be used for
+        // navigation within the document
+        vm.currURL = $location.absUrl();
+
+        // Get the protocol being file or http
+        vm.theProtocol = $location.protocol();
+
+        // Get the host
+        vm.currHost = $location.host();
+
+        // Get the port
+        vm.currPort = $location.port();
+
+        // Set the path
+        $location.path("#/the/path");
+
+        // Get the path
+        vm.currPath = $location.path();
+
+        // Set the search
+        $location.search("random=stuff");
+
+        // Get the search
+        vm.currSearch = $location.search();
+
+        // The interval service executes code at a set
+        // time being every 2 seconds in this situation
+        $interval(function() {
+          const hour = new Date().getHours();
+
+          // Add a starting 0 and then slice the last
+          // to numbers off the string
+          const minutes = ('0' + new Date().getMinutes()).slice(-2);
+          const seconds = ('0' + new Date().getSeconds()).slice(-2);
+
+          vm.time = hour + ":" + minutes + ":" + seconds;
+        }, 2000);
+
+        // Log messages to the console for debugging
+        vm.log = $log;
+
+        // Any uncaught exception delegates to the
+        // $exceptionHandler service which outputs
+        // to the console.
+        vm.throwException = function() {
+          // If we didn't catch the exception a stack
+          // trace would print in the console
+          try {
+            throw new Error("Exception Thrown");
+          }
+          catch(e) {
+            // Receives the exception and a string
+            // explaining the exception
+            $exceptionHandler(e.message,
+              "Caught Exception");
+          }
+        }
+
+        vm.badStuff = "";
+
+        // Monitors a change in value for badStuff
+        // and sanitizes it
+        $scope.$watch("badStuff", function(value) {
+          vm.htmlData = $sanitize(value);
+        });
+
+        // Data used by compile below
+        vm.players = [{name: "Barry Bonds", avg: 0.298, hr: 762, obp: 0.444},
+        {name: "Hank Aaron", avg: 0.305, hr: 755, obp: 0.374},
+        {name: "Babe Ruth", avg: 0.342, hr: 714, obp: 0.474},
+        {name: "Ted Williams", avg: 0.344, hr: 521, obp: 0.482}];
+      }
+    </script>
+  </body>
+</html>

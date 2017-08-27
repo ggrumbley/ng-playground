@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="app12" ng-cloak>
+  <head>
+    <title>AngularJS | app12</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+
+    <div ex-dir>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum neque nec purus rutrum, at dignissim lectus egestas. Aliquam pretium tortor ligula, non egestas massa dictum quis. Aenean iaculis elit tempor odio tristique malesuada. Vivamus in nisl vulputate, scelerisque mi vitae, efficitur metus. Suspendisse potenti
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app12', [])
+        .directive('exDir', exDir);
+
+
+
+      function exDir() {
+        const directive = {
+          transclude: true,
+          restrict: 'EA',
+          controller: mainCtrl,
+          controllerAs: 'vm',
+          bindToController: true,
+          template: "<div><h4>{{vm.moreLorem}}</h4></div><div ng-transclude></div>"
+        };
+
+        return directive;
+      }
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.moreLorem = "AMAZEBALLZ! OMG OMG!";
+      }
+    </script>
+  </body>
+</html>

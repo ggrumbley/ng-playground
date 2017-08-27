@@ -11,15 +11,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-
+    <!-- Define the data to print by passing the scope name -->
+    <player name="barryBonds"></player>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script>
       angular
         .module('app11', [])
-        .controller('ctrl1', ctrl1);
+        .directive("player", player);
 
-      function ctrl1() {
+      function player() {
+        const directive = {
+          restrict: 'E',
+          controller: mainCtrl,
+          controllerAs: 'vm',
+          bindToController: true,
+          template: "{{vm.barryBonds.name}} had a {{vm.barryBonds.avg}} AVG with {{vm.barryBonds.hr}} homeruns and a {{vm.barryBonds.obp}} OBP",
+          scope: {
+            name: "@"
+          },
+          compile: function(element, attributes) {
+            const linkFunc = function($scope, element, attributes) {
+              element.bind('click', function() {
+                element.html('Barry Disappeared');
+              });
+            }
+            return linkFunc;
+          }
+        };
 
+        return directive;
+      }
+
+      function mainCtrl() {
+        const vm = this;
+        vm.barryBonds = {name: "Barry Bonds", avg: 0.298, hr: 762, obp: 0.444};
+
+        vm.hankAaron =  {name: "Hank Aaron", avg: 0.305, hr: 755, obp: 0.374};
+        vm.babeRuth = {name: "Babe Ruth", avg: 0.342, hr: 714, obp: 0.474};
+        vm.tedWilliams ={name: "Ted Williams", avg: 0.344, hr: 521, obp: 0.482};
       }
     </script>
   </body>

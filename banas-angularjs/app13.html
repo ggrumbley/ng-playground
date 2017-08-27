@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="app13" ng-cloak>
+  <head>
+    <title>AngularJS | app13</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div ng-controller="mainCtrl">
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app13', [])
+        .service('HelloService', HelloService)
+        .factory('HelloFactory', HelloFactory)
+        .controller('mainCtrl', mainCtrl)
+
+      function mainCtrl(HelloService, HelloFactory) {
+        HelloService.helloService();
+        HelloFactory.helloFactory();
+      }
+
+      function HelloService() {
+        this.helloService = function () {
+          console.log('Hello Service');
+        };
+      };
+
+      function HelloFactory() {
+        let factory = {};
+
+        factory.helloFactory = function () {
+          console.log('Hello Factory');
+        };
+
+        return factory;
+      };
+    </script>
+  </body>
+</html>
