@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Directives Link</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div ng-controller="mainCtrl as vm">
+      Date format: <input ng-model="vm.format"> <hr/>
+      Current time is: <span my-current-time="vm.format"></span>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .directive('myCurrentTime', myCurrentTime);
+
+      function mainCtrl() {
+        const vm = this;
+        vm.format = 'M/d/yy h:mm:ss a';
+      }
+
+      function myCurrentTime($interval, dateFilter) {
+        function link(scope, element, attrs) {
+          let format;
+          let timeoutId;
+
+          function updateTime() {
+            element.text(dateFilter(new Date(), format));
+          }
+
+          scope.$watch(attrs.myCurrentTime, (value) => {
+            format = value;
+            updateTime();
+          });
+
+          element.on('$destroy', () => {
+            $interval.cancel(timeoutId);
+          });
+
+          // start the UI update process; save the timeoutId for canceling
+          timeoutId = $interval(() => {
+            updateTime();
+          }, 1000);
+        }
+
+        return {
+          link: link
+        };
+      }
+    </script>
+  </body>
+</html>

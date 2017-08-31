@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Directive Communication</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <my-tabs>
+      <my-pane title="Hello">
+        <p>Lorem ipsum dolor sit amet</p>
+      </my-pane>
+      <my-pane title="World">
+        <em>Mauris elementum elementum enim at suscipit.</em>
+        <p><a href ng-click="i = i + 1">counter: {{i || 0}}</a></p>
+      </my-pane>
+    </my-tabs>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .directive('myTabs', myTabs)
+        .directive('myPane', myPane)
+
+      function mainCtrl($scope) {
+        var panes = $scope.panes = [];
+
+
+        $scope.select = function(pane) {
+          angular.forEach(panes, function(pane) {
+            pane.selected = false;
+          });
+          pane.selected = true;
+        };
+
+        this.addPane = function(pane) {
+          if (panes.length === 0) {
+            $scope.select(pane);
+          }
+          panes.push(pane);
+        };
+      };
+
+      function myTabs() {
+        return {
+          restrict: 'E',
+          transclude: true,
+          scope: {},
+          controller: mainCtrl,
+          controllerAs: 'vm',
+          bindToController: true,
+          templateUrl: 'partials/_my-tabs.html'
+        };
+      }
+
+      function myPane() {
+        return {
+          require: '^^myTabs',
+          restrict: 'E',
+          transclude: true,
+          scope: {
+            title: '@'
+          },
+          link: function(scope, element, attrs, tabsCtrl) {
+            tabsCtrl.addPane(scope);
+          },
+          templateUrl: 'partials/_my-pane.html'
+        };
+      }
+    </script>
+  </body>
+</html>
