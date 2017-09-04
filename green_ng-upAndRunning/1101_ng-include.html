@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 11.01</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Example: ng-include</h2>
+    <div ng-controller="MainCtrl as vm">
+      <h3>List of Stocks</h3>
+      <div ng-repeat="stock in vm.stocks">
+        <div ng-include="vm.stockTemplate">
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('MainCtrl', MainCtrl)
+
+      function MainCtrl() {
+        const vm = this;
+
+        vm.stocks = [
+          {name: 'First Stock', price: 100, previous: 220},
+          {name: 'Second Stock', price: 140, previous: 120},
+          {name: 'Third Stock', price: 110, previous: 110},
+          {name: 'Fourth Stock', price: 400, previous: 420}
+        ];
+
+        vm.stockTemplate = './partials/_stock.0.html';
+
+        vm.getChange = function(stock) {
+          return Math.ceil(((stock.price - stock.previous) /
+          stock.previous) * 100);
+        };
+      };
+    </script>
+  </body>
+</html>
