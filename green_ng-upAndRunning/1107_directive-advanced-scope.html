@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 11.07</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Directive w/ Advanced Scope</h2>
+    <div ng-controller="MainCtrl as vm">
+        <h3>List of Stocks</h3>
+        <div ng-repeat="s in vm.stocks">
+          <stock-widget
+               stock-data="s"
+               stock-title="Stock {{$index}}. {{s.name}}"
+               when-select="vm.onStockSelect(stockPrice, stockName)">
+        </stock-widget>
+        </div>
+      </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('MainCtrl', MainCtrl)
+        .directive('stockWidget', stockWidget);
+
+      function MainCtrl() {
+        const vm = this;
+
+        vm.stocks = [
+          {name: 'First Stock', price: 100, previous: 220},
+          {name: 'Second Stock', price: 140, previous: 120},
+          {name: 'Third Stock', price: 110, previous: 110},
+          {name: 'Fourth Stock', price: 400, previous: 420}
+        ];
+        vm.onStockSelect = function(price, name) {
+          console.log(`Selected Price: ${price}, Name: ${name}`);
+        }
+      };
+
+      function stockWidget() {
+        function linkFunc(scope, el, attrs, vm) {
+          scope.getChange = function(stock) {
+              return Math.ceil(((stock.price - stock.previous) /
+                stock.previous) * 100);
+          };
+
+          scope.onSelect = function() {
+            scope.whenSelect({
+              stockName: scope.stockData.name,
+              stockPrice: scope.stockData.price,
+              stockPrevious: scope.stockData.previous
+            });
+          };
+        }
+
+        const directive = {
+          templateUrl: './partials/_stock.3.html',
+          restrict: 'E',
+          scope: {
+            stockData: '=',
+            stockTitle: '@',
+            whenSelect: '&'
+          },
+          link: linkFunc
+        };
+
+        return directive;
+      };
+    </script>
+  </body>
+</html>

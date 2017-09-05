@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 11.02</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Example: ng-switch</h2>
+    <div ng-controller="MainCtrl as vm">
+      <h3>Conditional Elements in HTML</h3>
+      <button ng-click="vm.currentTab = 'tab1'">
+        Tab 1
+      </button>
+      <button ng-click="vm.currentTab = 'tab2'">
+        Tab 2
+      </button>
+      <button ng-click="vm.currentTab = 'tab3'">
+        Tab 3
+      </button>
+      <button ng-click="vm.currentTab = 'something'">
+        Trigger Default
+      </button>
+
+      <div ng-switch="vm.currentTab">
+        <div ng-switch-when="tab1">
+          Tab 1 is selected
+        </div>
+        <div ng-switch-when="tab2">
+          Tab 2 is selected
+        </div>
+        <div ng-switch-when="tab3">
+          Tab 3 is selected
+        </div>
+        <div ng-switch-default>
+          No known tab selected
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('MainCtrl', MainCtrl)
+
+      function MainCtrl() {
+        const vm = this;
+        vm.currentTab = 'tab1';
+      };
+    </script>
+  </body>
+</html>

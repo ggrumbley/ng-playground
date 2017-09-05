@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 11.04</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Directive w/ Restrict</h2>
+    <div ng-controller="MainCtrl as vm">
+      <h3>List of Stocks</h3>
+      <div ng-repeat="stock in vm.stocks">
+          <stock-widget></stock-widget>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('MainCtrl', MainCtrl)
+        .directive('stockWidget', stockWidget);
+
+      function MainCtrl() {
+        const vm = this;
+
+        vm.stocks = [
+          {name: 'First Stock', price: 100, previous: 220},
+          {name: 'Second Stock', price: 140, previous: 120},
+          {name: 'Third Stock', price: 110, previous: 110},
+          {name: 'Fourth Stock', price: 400, previous: 420}
+        ];
+
+        vm.getChange = function(stock) {
+          return Math.ceil(((stock.price - stock.previous) /
+          stock.previous) * 100);
+        };
+      };
+
+      function stockWidget() {
+        return {
+          templateUrl: './partials/_stock.0.html',
+          restrict: 'AE'
+        };
+      }
+    </script>
+  </body>
+</html>
