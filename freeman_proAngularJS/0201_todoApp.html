@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+  <head>
+    <title>Todo List App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="page-header">
+      <h1>Gary's To Do List</h1>
+    </div>
+    <div class="panel">
+      <div class="input-group">
+        <input class="form-control" />
+        <span class="input-group-btn">
+          <button class="btn btn-default">Add</button>
+        </span>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Done</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Buy Flowers</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Get Shoes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Collect Tickets</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Call Pippa</td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('todoApp', [])
+        .controller('mainCtrl', mainCtrl)
+
+      function mainCtrl() {
+      }
+    </script>
+
+  </body>
+</html>
