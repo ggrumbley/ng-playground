@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 13.03</title>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+      .thick {
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Directive w/ Advanced Transclusion</h2>
+    <div ng-controller="mainCtrl as vm">
+      <h3>List of Stocks</h3>
+      <div simple-stock-repeat="vm.stocks">
+        We found {{stock.name}} at {{currentIndex}}
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .directive('simpleStockRepeat', simpleStockRepeat);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.stocks = [
+          {name: 'First Stock', price: 100, previous: 220},
+          {name: 'Second Stock', price: 140, previous: 120},
+          {name: 'Third Stock', price: 110, previous: 110},
+          {name: 'Fourth Stock', price: 400, previous: 420}
+        ];
+      }
+
+      function simpleStockRepeat() {
+        function linkFunc($scope, $element, $attrs, ctrl, $transclude) {
+          const myArray = $scope.$eval($attrs.simpleStockRepeat);
+          const container = angular.element('<div class="container"></div>');
+
+          for(let i = 0; i < myArray.length; i++) {
+            // Create an element instance w/ a new child
+            // scope using the clone linking function
+            const instance = $transclude($scope.$new(), function(clonedElement, newScope) {
+              // Expose custom variables for the instance
+              newScope.currentIndex = i;
+              newScope.stock = myArray[i];
+            });
+            // add el to the container
+            container.append(instance);
+          }
+
+          // With transclude: 'element', the element gets replaced w/ a comment. Add our generated content after the comment.
+          $element.after(container);
+        }
+
+        return {
+          restrict: 'A',
+          // Capture and replace entire el instead of just it's content
+          transclude: 'element',
+          // $transclude is passed in as the fifth arg to the linkFunc
+          link: linkFunc
+        }
+      }
+    </script>
+  </body>
+</html>

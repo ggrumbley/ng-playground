@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 13.05</title>
+    <link rel="stylesheet" href="lib/jquery.nouislider.css">
+    <style type="text/css">
+      .slider {
+        display: block;
+        height: 20px;
+        margin: 20px;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Slider App</h2>
+    <div ng-controller="mainCtrl as vm">
+      <div>
+        The current value of the slider is {{vm.selectedValue}}
+      </div>
+
+      <no-ui-slider class="slider"
+                    ng-model="vm.selectedValue"
+                    range-min="500"
+                    range-max="5000">
+      </no-ui-slider>
+
+      <div>
+        <input type="number"
+                ng-model="vm.textValue"
+                min="500"
+                max="5000"
+                placeholder="Set a value">
+        <button ng-click="vm.setSelectedValue()">
+          Set slider value
+        </button>
+      </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="lib/jquery.nouislider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .directive('noUiSlider', noUiSlider);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.selectedValue = 2000;
+
+        vm.textValue = 4000;
+
+        vm.setSelectedValue = function() {
+          vm.selectedValue = vm.textValue;
+        };
+
+      };
+
+      function noUiSlider() {
+        function linkFunc($scope, $el, $attr, ngModelCtrl) {
+          $el.noUiSlider({
+            // We might not have the initial value in ngModelCtrl yet
+            start: 0,
+            range: {
+              // $attrs by default gives us string values
+              // nouiSlider expects numbers, so convert
+              min: Number($attr.rangeMin),
+              max: Number($attr.rangeMax)
+            }
+          });
+
+          // When data changes inside AngularJS
+          // Notify the third party directive of the change
+          ngModelCtrl.$render = function() {
+            $el.val(ngModelCtrl.$viewValue);
+          };
+
+          // When data changes outside of AngularJS
+          $el.on('set', function(args) {
+            // Also tell AngularJS that it needs to update the UI
+            $scope.$apply(function() {
+              // Set the data within AngularJS
+              ngModelCtrl.$setViewValue($el.val());
+            });
+          });
+        }
+
+        return {
+          restrict: 'E',
+          require: 'ngModel',
+          link: linkFunc
+        };
+      };
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 13.04</title>
+    <link rel="stylesheet" href="./styles/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Directive w/ Controllers</h2>
+    <div ng-controller="mainCtrl as vm">
+      <tabs>
+        <tab title="First Tab">
+          This is the first tab.
+          the app started at {{vm.startedTime | date}}
+        </tab>
+        <tab title="Second Tab">
+          This is the second tab.
+          <div ng-repeat="stock in vm.stocks">
+            Stock Name: {{stock.name}}
+          </div>
+        </tab>
+      </tabs>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .directive('tabs', tabs)
+        .directive('tab', tab);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.startedTime = new Date().getTime();
+        vm.stocks = [
+          {name: 'First Stock', price: 100, previous: 220},
+          {name: 'Second Stock', price: 140, previous: 120},
+          {name: 'Third Stock', price: 110, previous: 110},
+          {name: 'Fourth Stock', price: 400, previous: 420}
+        ];
+      }
+
+      function tabs() {
+
+        function tabsCtrl($scope) {
+          let currentIndex = 0;
+          $scope.tabs = [];
+          this.registerTab = function(title, scope) {
+            if ($scope.tabs.length === 0) {
+              scope.selected = true;
+            } else {
+              scope.selected = false;
+            }
+            $scope.tabs.push({title: title, scope: scope});
+          };
+
+          $scope.selectTab = function(index) {
+            currentIndex = index;
+            for (var i = 0; i < $scope.tabs.length; i++) {
+              $scope.tabs[i].scope.selected = currentIndex === i;
+            }
+          };
+
+          $scope.isSelectedTab = function(index) {
+            return currentIndex === index;
+          };
+        };
+
+        return {
+          restrict: 'E',
+          transclude: true,
+          scope: true,
+          template:
+            '<div class="tab-headers">' +
+            '  <div ng-repeat="tab in tabs"' +
+            '       ng-click="selectTab($index)"' +
+            '       ng-class="{selected: isSelectedTab($index)}">' +
+            '     <span ng-bind="tab.title"></span>' +
+            '  </div>' +
+            '</div>' +
+            '<div ng-transclude></div> ',
+          controller: tabsCtrl
+        }
+      }
+
+      function tab() {
+        function linkFunc($scope, $el, $attr, tabCtrl) {
+          tabCtrl.registerTab($attr.title, $scope);
+        }
+        return {
+          restrict: 'E',
+          transclude: true,
+          template: '<div ng-show="selected" ng-transclude></div>',
+          require:'^tabs',
+          scope: true,
+          link: linkFunc
+        }
+      }
+    </script>
+  </body>
+</html>
