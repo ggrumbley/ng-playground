@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 13.06</title>
+    <style type="text/css">
+      input.ng-invalid {
+        background: pink;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Custom Validator</h2>
+    <div ng-controller="mainCtrl as vm">
+      <h3>Zip Code Input</h3>
+      <h5>Zips are allowed in one of the following formats</h5>
+      <ul>
+        <li>12345</li>
+        <li>12345 1234</li>
+        <li>12345-1234</li>
+      </ul>
+      <form novalidate="" name="zipForm">
+        Enter valid zip code:
+        <input type="text"
+                name="zipField"
+                ng-model="vm.zip"
+                valid-zip>
+        <div ng-show="zipForm.zipField.$error.zip">Zipcode is invalid</div>
+
+      </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .directive('validZip', validZip);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.zip = '';
+      };
+
+      function validZip() {
+        function linkFunc($scope, $el, $attr, ngModelCtrl) {
+          const zipCodeRegex = /^\d{5}(?:[-\s]\d{4})?$/g;
+
+          ngModelCtrl.$validators.zip = function(val) {
+            return zipCodeRegex.test(val);
+          };
+        };
+
+        return {
+          restrict: 'A',
+          require: 'ngModel',
+          link: linkFunc
+        };
+      };
+
+    </script>
+  </body>
+</html>

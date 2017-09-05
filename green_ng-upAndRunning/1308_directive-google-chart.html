@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 13.07</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Directive w/ Google Chart</h2>
+    <div ng-controller="mainCtrl as vm">
+      <div>
+        <button ng-click="vm.changeData()">
+          Change Pie Chart Data
+        </button>
+      </div>
+      <pie-chart chart-data="vm.chartData" chart-config="vm.chartConfig">
+      </pie-chart>
+    </div>
+    <script src="http://www.google.com/jsapi"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .factory('chartLoader', chartLoader)
+        .directive('pieChart', pieChart);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.chartData = [
+          {label: 'First', value: 25},
+          {label: 'Second', value: 54},
+          {label: 'Third', value: 75}
+        ];
+        vm.chartConfig = {
+          title: 'One Two Three Chart',
+          firstColumnHeader: 'Counter',
+          secondColumnHeader: 'Actual Value'
+        };
+
+        vm.changeData = function() {
+          vm.chartData[1].value = 25;
+        };
+      };
+
+      chartLoader.$inject = ['$q', '$rootScope', '$window'];
+      function chartLoader($q, $rootScope, $window) {
+        // Create a Deffered Object
+        const deferred = $q.defer();
+
+        // Load Google Charts API async
+        $window.google.load('visualization', '1', {
+          packages: ['corechart'],
+          callback: function() {
+            // When loaded, trigger the resolve, but inside an $apply as the event happens outside of the NG life cycle
+            $rootScope.$apply(function() {
+              deferred.resolve();
+            });
+          }
+        });
+        // Return the promise object for the directive to chain onto.
+        return deferred.promise;
+      }
+
+      pieChart.$inject = ['chartLoader'];
+      function pieChart(chartLoader) {
+        const convertToPieChartDataTableFormat = function(firstColumnName, secondColumnName, data) {
+          let pieChartArray = [[firstColumnName, secondColumnName]];
+          for (let i = 0; i < data.length; i++) {
+            pieChartArray.push([data[i].label, data[i].value]);
+          }
+          return google.visualization.arrayToDataTable(pieChartArray);
+        };
+
+        function linkFunc($scope, $element) {
+          chartLoader.then(function() {
+            const chart = new google.visualization.PieChart($element[0]);
+
+            $scope.$watch('chartData', function(newVal, oldVal) {
+              const config = $scope.chartConfig;
+              if (newVal) {
+                chart.draw(
+                  convertToPieChartDataTableFormat(
+                    config.firstColumnHeader,
+                    config.secondColumnHeader,
+                    newVal),
+                  {title: $scope.chartConfig.title});
+              }
+            }, true);
+          });
+        };
+
+        return {
+          restrict: 'AE',
+          scope: {
+            chartData: '=',
+            chartConfig: '='
+          },
+          link: linkFunc
+        };
+      };
+
+    </script>
+  </body>
+</html>

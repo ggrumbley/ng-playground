@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+  <head>
+    <title>NG Up & Running | 13.07</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h2>Directive Compile</h2>
+    <div ng-controller="mainCtrl as vm">
+      <form novalidate="" name="mainForm">
+        <form-element type="text"
+                      name="uname"
+                      bind-to="vm.username"
+                      label="Username"
+                      required
+                      ng-minlength="5">
+          <validation key="required">
+            Please enter a username
+          </validation>
+          <validation key="minlength">
+            Username must be at least 5 characters
+          </validation>
+        </form-element>
+
+        Username is {{vm.username}}
+
+        <form-element type="password"
+                      name="pwd"
+                      bind-to="mainCtrl.password"
+                      label="Password"
+                      required
+                      ng-pattern="/^[a-zA-Z0-9]+$/">
+          <validation key="required">
+            Please enter a password
+          </validation>
+          <validation key="pattern">
+            Password must only be alphanumeric characters
+          </validation>
+        </form-element>
+
+        Password is {{vm.password}}
+
+        <button>Submit</button>
+      </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+      angular
+        .module('app', [])
+        .controller('mainCtrl', mainCtrl)
+        .directive('formElement', formElement);
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.username = '';
+        vm.password = '';
+      };
+
+      function formElement() {
+        function compileFunc($element, $attrs) {
+          var expectedInputAttrs = {
+            'required': 'required',
+            'ng-minlength': 'ngMinlength',
+            'ng-pattern': 'ngPattern'
+            // More here to be implemented
+          };
+
+          // Start extracting content from the HTML
+          var validationKeys = $element.find('validation');
+          var presentValidationKeys = {};
+          var inputName = $attrs.name;
+          angular.forEach(validationKeys, function(validationKey) {
+            validationKey = angular.element(validationKey);
+            presentValidationKeys[validationKey.attr('key')] =
+              validationKey.text();
+          });
+
+          // Start generating final element HTML
+          var elementHtml = '<div>' +
+            '<label>' + $attrs.label + '</label>';
+          elementHtml += '<input type="' + $attrs.type +
+                              '" name="' + inputName +
+                              '" ng-model="' + $attrs.bindTo + '"';
+
+          $element.removeAttr('type');
+          $element.removeAttr('name');
+          for (var i in expectedInputAttrs) {
+            if ($attrs[expectedInputAttrs[i]] !== undefined) {
+              elementHtml += ' ' + i + '="' +
+                  $attrs[expectedInputAttrs[i]] + '"';
+            }
+            $element.removeAttr(i);
+          }
+          elementHtml += '>';
+
+          elementHtml +=
+              '<span ng-repeat="(key, text) in validators" ' +
+                  ' ng-show="hasError(key)"' +
+                  ' ng-bind="text"></span>';
+
+          elementHtml += '</div>';
+          $element.html(elementHtml);
+
+          return function($scope, $element, $attrs, formCtrl) {
+            $scope.validators = angular.copy(presentValidationKeys);
+            $scope.hasError = function(key) {
+              return !!formCtrl[inputName]['$error'][key];
+            };
+          };
+        };
+
+        return {
+          restrict: 'E',
+          require: '^form',
+          scope: true,
+          compile: compileFunc
+        };
+      };
+
+    </script>
+  </body>
+</html>
