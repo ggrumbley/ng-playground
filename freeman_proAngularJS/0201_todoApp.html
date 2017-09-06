@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
+  <body ng-controller="mainCtrl as vm">
     <div class="page-header">
-      <h1>Gary's To Do List</h1>
+      <h1>{{vm.todo.user}}'s' To Do List</h1>
+      <span class="label label-default">{{vm.todo.items.length}}</span>
     </div>
     <div class="panel">
       <div class="input-group">
@@ -25,21 +26,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Buy Flowers</td>
-            <td>No</td>
-          </tr>
-          <tr>
-            <td>Get Shoes</td>
-            <td>No</td>
-          </tr>
-          <tr>
-            <td>Collect Tickets</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Call Pippa</td>
-            <td>No</td>
+          <tr ng-repeat="i in vm.todo.items">
+            <td>{{i.action}}</td>
+            <td>{{i.done}}</td>
           </tr>
         </tbody>
       </table>
@@ -47,12 +36,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script>
+
+      const model = {
+        user: "Gary",
+        items: [
+          { action: "Buy Flowers", done: false },
+          { action: "Get Shoes", done: false },
+          { action: "Collect Tickets", done: true },
+          { action: "Call Joe", done: false }
+        ]
+      };
       angular
         .module('todoApp', [])
         .controller('mainCtrl', mainCtrl)
 
       function mainCtrl() {
-      }
+        const vm = this;
+
+        vm.todo = model;
+      };
     </script>
 
   </body>
