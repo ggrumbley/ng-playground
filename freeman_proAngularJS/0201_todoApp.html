@@ -8,16 +8,27 @@
   </head>
   <body ng-controller="mainCtrl as vm">
     <div class="page-header">
-      <h1>{{vm.todo.user}}'s' To Do List</h1>
-      <span class="label label-default">{{vm.todo.items.length}}</span>
+      <h1>
+        {{vm.todo.user}}'s' To Do List
+        <span class="label ng-class:vm.warningLevel()"
+              ng-hide="vm.incompleteCount() === 0">
+          {{vm.incompleteCount()}}
+        </span>
+      </h1>
     </div>
     <div class="panel">
+
       <div class="input-group">
-        <input class="form-control" />
+        <input class="form-control" ng-model="actionText" />
         <span class="input-group-btn">
-          <button class="btn btn-default">Add</button>
+          <button class="btn btn-default"
+                  ng-click="vm.addNewItem(actionText)">
+            Add
+          </button>
         </span>
       </div>
+
+
       <table class="table table-striped">
         <thead>
           <tr>
@@ -26,34 +37,67 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="i in vm.todo.items">
+          <tr ng-repeat="i in vm.todo.items | itemsFilter:showComplete | orderBy:'action'">
             <td>{{i.action}}</td>
-            <td>{{i.done}}</td>
+            <td><input type="checkbox" ng-model="i.done" /></td>
           </tr>
         </tbody>
       </table>
+
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="showComplete">
+          Show complete
+        </label>
+      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script>
 
-      const model = {
+      let model = {
         user: "Gary",
         items: [
-          { action: "Buy Flowers", done: false },
-          { action: "Get Shoes", done: false },
-          { action: "Collect Tickets", done: true },
-          { action: "Call Joe", done: false }
+          { "action": "Buy Flowers", "done": false },
+          { "action": "Get Shoes", "done": false },
+          { "action": "Collect Tickets", "done": true },
+          { "action": "Call Joe", "done": false }
         ]
       };
+
       angular
         .module('todoApp', [])
         .controller('mainCtrl', mainCtrl)
+        .filter('itemsFilter', itemsFilter);
 
-      function mainCtrl() {
+      function mainCtrl($http) {
         const vm = this;
 
+        // $http.get('./todoData.json')
+        //   .then((data) => model.items = data.data);
+
         vm.todo = model;
+
+        vm.incompleteCount = () => {
+          let count = 0;
+          vm.todo.items.map((i) => { if (!i.done) { count++ } });
+
+          return count;
+        }
+
+        vm.warningLevel = () => vm.incompleteCount() < 3 ? "label-success" : "label-danger";
+
+        vm.addNewItem = (actionText) => vm.todo.items.push({ action: actionText, done: false });
+      };
+
+      function itemsFilter() {
+        return (items, showComplete) => {
+          let resultArr = [];
+            items.map((i) => {
+              if (i.done === false || showComplete === true) { resultArr.push(i); }
+            });
+          return resultArr;
+        };
       };
     </script>
 
