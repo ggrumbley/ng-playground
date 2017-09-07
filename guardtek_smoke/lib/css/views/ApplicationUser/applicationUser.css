@@ -1,0 +1,33 @@
+﻿.grid-sub-header
+{
+    display:inline-block;
+    width:99%;
+    font-size:10pt;
+    font-family:Arial;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.grid-search
+{
+    float:left;
+}
+
+.grid-add
+{
+    float:right;
+}
+
+.grid-add a
+{
+    cursor:hand;
+    color:#00008B;
+    text-decoration:underline;    
+}
+
+.dialog-user-edit 
+{
+    font-size:10pt;
+    font-family:Arial;
+    font-weight:bold;
+}

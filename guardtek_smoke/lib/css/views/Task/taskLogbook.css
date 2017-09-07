@@ -1,0 +1,101 @@
+﻿/* File Created: août 23, 2013 */
+.task-details
+{
+    font-family: Arial;
+    font-size: 10pt;
+    padding-top:10px;
+    padding-bottom:10px;
+    border: 1px solid black;
+    margin-bottom:10px;
+    height:400px;
+}
+
+.task-details-container
+{
+    font-family: Arial;
+    font-size: 10pt;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-bottom:10px;
+    height:400px;
+}
+
+.task-fieldset
+{
+    font-family: Arial;
+    font-size: 10pt;
+    padding-top:10px;
+    padding-bottom:10px;
+    border: 1px solid black;
+    margin-bottom:10px;
+}
+
+.task-details-title
+{
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight: bold;
+    padding: 0 10 0 10;
+    width:120px;
+}
+
+.task-details-table
+{
+    border-left: 1px solid black;
+    width:100%;
+}
+
+.task-details-table tr
+{
+    cursor:hand;
+}
+
+.task-details-table td
+{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.task-details-header
+{
+    background-color: #eeeeee;
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align:center;
+}
+
+.task-details-value 
+{
+    font-family: Arial;
+    font-size: 10pt;
+    padding-left:2px;
+}
+
+#end-date, #start-date,
+#tasks_search-from, #tasks_search-to, #tasks_details,
+#cmd-refresh, #cmd-export, #chk-details
+{
+    margin: 5px 5px 5px 5px;
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+#tasks_search {
+    margin-top: 10px;
+    margin-left: 2%;
+}
+
+#taskListWrapper {
+    height: 0px;    
+}
+#taskListContainer {
+    position: relative;
+    margin: 0 auto;
+    top: 20px;
+    width: 96%;
+}
+#taskList {
+    width: 96%;
+}

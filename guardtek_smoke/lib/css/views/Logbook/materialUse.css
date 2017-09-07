@@ -1,0 +1,181 @@
+﻿#hierarchy-path-container, .select2-container {   
+    float: left;
+}
+
+
+#company-list 
+{
+    width: 100%;
+}
+
+fieldset
+{
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+.details-title
+{
+    font-family: Arial;
+    font-size: 10pt;
+    
+}
+
+.details-title span
+{
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight:bold;
+}
+
+.details-title input
+{
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+#prompt_container input[type=text] 
+{
+    width: 100%;
+}
+
+#prompt_container 
+{
+    display: none;
+}
+
+[data-type="editor-container"] {
+    width: 580px;    
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;    
+}
+
+[data-type="editor"] {
+    width: 580px;
+    padding-bottom: 10px;
+    clear: both;
+}
+
+[data-type="editor"] li {
+    list-style: none;
+    margin-left: -40px;
+    margin-bottom: 10px
+}
+
+[data-type="label"] {
+    text-align: left;
+    font-weight: bold;
+    width: 150px;
+    display: block;
+    float: left;
+    padding-right: 15px;    
+    padding-top: 4px;    
+}
+
+[data-type="field"] {
+    text-align: left;    
+}
+
+[data-type="action"] {
+    border-top: 1px solid Silver;    
+    text-align: right;
+    padding: 5px;    
+}
+
+[data-member="GeographicPosition"] 
+{    
+    height: 300px;
+    border: 1px dashed Silver;        
+    width: 520px;
+    float: left;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+[data-editor-for="GeographicPosition"] {
+    position: relative;
+}
+
+[data-editor-for="GeographicPosition"] [data-action="resolveAddress"] {    
+    margin-top: 2px;
+}
+
+.ui-icon-addpoint 
+{
+    background-image: url(../../../img/views/HierarchyNode/pushpin_add.png);
+}
+
+
+.ui-icon-gpslocate 
+{
+    background-image: url(../../../img/maps/gps_locate.png) !important;    
+}
+
+[data-type="title"] {
+    display: block;
+    width: 90%;
+    padding-right: 15px;    
+    margin-bottom: 10px;        
+    text-align: left;        
+    border-bottom: 1px dashed Silver;
+    float: left;
+}
+
+[data-type="toolbar"] {
+    text-align: right;
+    bottom: 0px;
+    right: 0px;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: absolute;    
+}
+
+.menu-nodeDataTypes-items {
+    text-align: left;    
+}
+
+#menu-nodeDataTypes {
+    float: left;
+    left: 0px !important;
+    position: absolute;    
+    bottom: 15px;
+    padding: 0px;
+}
+
+#menu-nodeDataTypes button {
+    bottom: -7px;    
+}
+
+.ui-dialog-buttonset {
+    width: 100%;
+    text-align: right;    
+}
+
+.menu-nodeDataTypes-items {        
+    position: relative;
+    top: auto !important;
+    left: 15px !important;
+    bottom: 28px;
+}
+
+.launcherClass {
+    left: 15px;
+    position: absolute;
+}
+
+[data-type="editor"] [data-action] {
+    height: 24px;
+    width: 30px;
+    margin-left: 3px;
+}
+
+#dialog-node-linkmanager .ui-jqgrid {
+    margin-top: 20px;        
+}
+
+[data-action] button .ui-icon {
+    width: 20px !important;
+}
+

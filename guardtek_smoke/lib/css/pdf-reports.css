@@ -1,0 +1,466 @@
+/* line 61, ../../sass/includes/_defaults.scss */
+.clear {
+  clear: both;
+}
+
+/* line 65, ../../sass/includes/_defaults.scss */
+.green {
+  color: #75bc26;
+}
+
+/* line 66, ../../sass/includes/_defaults.scss */
+.red {
+  color: #d12f2d;
+}
+
+/* line 67, ../../sass/includes/_defaults.scss */
+.orange {
+  color: #ee963f;
+}
+
+/* line 68, ../../sass/includes/_defaults.scss */
+.yellow {
+  color: #FFE800;
+}
+
+/* line 69, ../../sass/includes/_defaults.scss */
+.yellow-dark {
+  color: #eed848;
+}
+
+/* line 70, ../../sass/includes/_defaults.scss */
+.blue {
+  color: #428bca;
+}
+
+/* line 71, ../../sass/includes/_defaults.scss */
+.blue-light {
+  color: #00b5ff;
+}
+
+/* line 73, ../../sass/includes/_defaults.scss */
+.hidden {
+  display: none;
+}
+
+/* line 75, ../../sass/includes/_defaults.scss */
+.disabled {
+  color: #c7cbd4;
+}
+
+/* line 79, ../../sass/includes/_defaults.scss */
+.no-border {
+  border: 0px !important;
+}
+
+/* line 84, ../../sass/includes/_defaults.scss */
+.bigger[class^="icon-"], .bigger[class*=" icon-"], .bigger.mdi {
+  font-size: 14pt;
+}
+
+/* line 2, ../../sass/pdf-reports.scss */
+.logbook-report {
+  position: relative;
+}
+/* line 5, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report {
+  border-width: 1px;
+}
+/* line 6, ../../sass/pdf-reports.scss */
+.logbook-report li {
+  padding: 1px 10px;
+}
+/* line 8, ../../sass/pdf-reports.scss */
+.logbook-report .report-type {
+  display: inline-block;
+  max-width: 50%;
+  padding: 5px;
+  font-size: 12pt;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: white;
+}
+/* line 9, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Event {
+  background-color: #428bca;
+}
+/* line 10, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Incident {
+  background-color: #d12f2d;
+}
+/* line 11, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Inspection {
+  background-color: #7C4DFF;
+}
+/* line 12, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Task {
+  background-color: #045b8d;
+}
+/* line 13, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Visit {
+  background-color: #E0C300;
+}
+/* line 14, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Key {
+  background-color: #795548;
+}
+/* line 15, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Tour {
+  background-color: #8db02e;
+}
+/* line 16, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-TourIncident {
+  background-color: #F57C00;
+}
+/* line 17, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-Report {
+  background-color: #CC6699;
+}
+/* line 18, ../../sass/pdf-reports.scss */
+.logbook-report .report-type.report-type-AllEvents {
+  background-color: #991F1D;
+}
+/* line 20, ../../sass/pdf-reports.scss */
+.logbook-report .text-color-TourIncident {
+  color: #F57C00;
+}
+/* line 21, ../../sass/pdf-reports.scss */
+.logbook-report .text-color-Incident {
+  color: #d12f2d;
+}
+/* line 22, ../../sass/pdf-reports.scss */
+.logbook-report .text-color-Event {
+  color: #428bca;
+}
+/* line 24, ../../sass/pdf-reports.scss */
+.logbook-report .row-border-left-Incident {
+  border-left: 5px solid #d12f2d;
+}
+/* line 25, ../../sass/pdf-reports.scss */
+.logbook-report .row-border-left-TourIncident {
+  border-left: 5px solid #F57C00;
+}
+/* line 26, ../../sass/pdf-reports.scss */
+.logbook-report .row-border-left-Event {
+  border-left: 5px solid #428bca;
+}
+/* line 29, ../../sass/pdf-reports.scss */
+.logbook-report .report-table .table-header {
+  background-color: #E2E5EB;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+/* line 36, ../../sass/pdf-reports.scss */
+.logbook-report .report-table .row {
+  border-top: 1px solid #F1F2F5;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  page-break-inside: avoid;
+}
+/* line 43, ../../sass/pdf-reports.scss */
+.logbook-report .report-table .row:nth-child(odd):not(.table-header) {
+  background-color: #F1F2F5;
+}
+/* line 49, ../../sass/pdf-reports.scss */
+.logbook-report .color-Inspection {
+  background-color: #7C4DFF;
+}
+/* line 50, ../../sass/pdf-reports.scss */
+.logbook-report .color-Task {
+  background-color: #045b8d;
+}
+/* line 51, ../../sass/pdf-reports.scss */
+.logbook-report .color-Report {
+  background-color: #CC6699;
+}
+/* line 52, ../../sass/pdf-reports.scss */
+.logbook-report .color-Bunch {
+  background-color: #795548;
+}
+/* line 53, ../../sass/pdf-reports.scss */
+.logbook-report .color-CallLog {
+  background-color: #BBBBBB;
+}
+/* line 54, ../../sass/pdf-reports.scss */
+.logbook-report .color-CallMe {
+  background-color: #BBBBBB;
+}
+/* line 55, ../../sass/pdf-reports.scss */
+.logbook-report .color-Control {
+  background-color: #BBBBBB;
+}
+/* line 56, ../../sass/pdf-reports.scss */
+.logbook-report .color-Emergency {
+  background-color: #BBBBBB;
+}
+/* line 57, ../../sass/pdf-reports.scss */
+.logbook-report .color-EndMaterialUse {
+  background-color: #BBBBBB;
+}
+/* line 58, ../../sass/pdf-reports.scss */
+.logbook-report .color-EndPause {
+  background-color: #BBBBBB;
+}
+/* line 59, ../../sass/pdf-reports.scss */
+.logbook-report .color-EndPost {
+  background-color: #BBBBBB;
+}
+/* line 60, ../../sass/pdf-reports.scss */
+.logbook-report .color-EndRotate {
+  background-color: #BBBBBB;
+}
+/* line 61, ../../sass/pdf-reports.scss */
+.logbook-report .color-Event {
+  background-color: #428bca;
+}
+/* line 62, ../../sass/pdf-reports.scss */
+.logbook-report .color-Fall {
+  background-color: #BBBBBB;
+}
+/* line 63, ../../sass/pdf-reports.scss */
+.logbook-report .color-Incident {
+  background-color: #d12f2d;
+}
+/* line 64, ../../sass/pdf-reports.scss */
+.logbook-report .color-ManDown {
+  background-color: #5E3A07;
+}
+/* line 65, ../../sass/pdf-reports.scss */
+.logbook-report .color-ManTilt {
+  background-color: #467016;
+}
+/* line 66, ../../sass/pdf-reports.scss */
+.logbook-report .color-OtherEvent {
+  background-color: #BBBBBB;
+}
+/* line 67, ../../sass/pdf-reports.scss */
+.logbook-report .color-Panic {
+  background-color: #EB15CB;
+}
+/* line 68, ../../sass/pdf-reports.scss */
+.logbook-report .color-Patrol {
+  background-color: #BBBBBB;
+}
+/* line 69, ../../sass/pdf-reports.scss */
+.logbook-report .color-PatrolPTI {
+  background-color: #BBBBBB;
+}
+/* line 70, ../../sass/pdf-reports.scss */
+.logbook-report .color-PTI {
+  background-color: #BBBBBB;
+}
+/* line 71, ../../sass/pdf-reports.scss */
+.logbook-report .color-LostOfConnection {
+  background-color: #BBBBBB;
+}
+/* line 72, ../../sass/pdf-reports.scss */
+.logbook-report .color-Round {
+  background-color: #8db02e;
+}
+/* line 73, ../../sass/pdf-reports.scss */
+.logbook-report .color-RoundIncident {
+  background-color: #E0C300;
+}
+/* line 74, ../../sass/pdf-reports.scss */
+.logbook-report .color-RoundPTI {
+  background-color: #BBBBBB;
+}
+/* line 75, ../../sass/pdf-reports.scss */
+.logbook-report .color-Shift {
+  background-color: #104B5E;
+}
+/* line 76, ../../sass/pdf-reports.scss */
+.logbook-report .color-ShiftConfirmation {
+  background-color: #104B5E;
+}
+/* line 77, ../../sass/pdf-reports.scss */
+.logbook-report .color-Shock {
+  background-color: #111111;
+}
+/* line 78, ../../sass/pdf-reports.scss */
+.logbook-report .color-Stock {
+  background-color: #BBBBBB;
+}
+/* line 79, ../../sass/pdf-reports.scss */
+.logbook-report .color-StartMaterialUse {
+  background-color: #BBBBBB;
+}
+/* line 80, ../../sass/pdf-reports.scss */
+.logbook-report .color-StartPause {
+  background-color: #BBBBBB;
+}
+/* line 81, ../../sass/pdf-reports.scss */
+.logbook-report .color-StartRotate {
+  background-color: #BBBBBB;
+}
+/* line 82, ../../sass/pdf-reports.scss */
+.logbook-report .color-Tampering {
+  background-color: #BBBBBB;
+}
+/* line 83, ../../sass/pdf-reports.scss */
+.logbook-report .color-UnassignedUser {
+  background-color: #BBBBBB;
+}
+/* line 84, ../../sass/pdf-reports.scss */
+.logbook-report .color-Visit {
+  background-color: #F57C00;
+}
+/* line 85, ../../sass/pdf-reports.scss */
+.logbook-report .color-Timer {
+  background-color: #BBBBBB;
+}
+/* line 86, ../../sass/pdf-reports.scss */
+.logbook-report .color-EnteringArea {
+  background-color: #BBBBBB;
+}
+/* line 87, ../../sass/pdf-reports.scss */
+.logbook-report .color-LeavingArea {
+  background-color: #BBBBBB;
+}
+/* line 88, ../../sass/pdf-reports.scss */
+.logbook-report .report-pill {
+  border-radius: .25em;
+  padding: .2em .6em .3em;
+  color: White;
+  font-weight: bold;
+}
+/* line 91, ../../sass/pdf-reports.scss */
+.logbook-report .report-info-block {
+  font-size: 9pt;
+  font-weight: bold;
+  padding: 3px;
+  display: block;
+}
+/* line 92, ../../sass/pdf-reports.scss */
+.logbook-report .report-title {
+  font-size: 18pt;
+  font-weight: normal;
+  white-space: nowrap;
+  color: #515359;
+}
+/* line 93, ../../sass/pdf-reports.scss */
+.logbook-report .report-info-block div {
+  white-space: nowrap;
+  display: inline-block;
+}
+/* line 95, ../../sass/pdf-reports.scss */
+.logbook-report .report-title.report-type-Incident, .logbook-report .report-title.report-type-TourIncident {
+  color: #d12f2d;
+}
+/* line 97, ../../sass/pdf-reports.scss */
+.logbook-report .logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+/* line 100, ../../sass/pdf-reports.scss */
+.logbook-report .logo img {
+  max-height: 80px !important;
+}
+/* line 103, ../../sass/pdf-reports.scss */
+.logbook-report .report-description {
+  margin: 10px auto;
+  max-width: 80%;
+  text-align: left;
+}
+/* line 105, ../../sass/pdf-reports.scss */
+.logbook-report .reportTitle {
+  font-weight: bold;
+  text-align: center;
+  padding-top: 10px;
+}
+/* line 108, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report td {
+  font-size: 10pt;
+  padding: 3px 10px;
+}
+/* line 109, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report .activity-report-table {
+  width: 100%;
+}
+/* line 112, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report .activity-report-table td.title {
+  width: 30%;
+  font-weight: bold;
+  vertical-align: top;
+}
+/* line 113, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report .activity-report-table td.info.nowrap {
+  white-space: nowrap;
+}
+/* line 114, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report .activity-report-table tr:nth-child(even) {
+  background-color: #F1F2F5;
+}
+/* line 116, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report .activity-report-table td.error {
+  color: #d12f2d;
+}
+/* line 117, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report .activity-report-table td.success {
+  color: #75bc26;
+}
+/* line 120, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report img {
+  max-width: 320px;
+  max-height: 240px;
+  border: 0px;
+  padding: 5px;
+}
+/* line 122, ../../sass/pdf-reports.scss */
+.logbook-report .activity-report .signature {
+  background: none !important;
+  max-height: 50px;
+}
+/* line 128, ../../sass/pdf-reports.scss */
+.logbook-report .page, .logbook-report.page {
+  page-break-after: always;
+}
+/* line 131, ../../sass/pdf-reports.scss */
+.logbook-report .page:last-child, .logbook-report.page:last-child {
+  page-break-after: avoid;
+}
+/* line 136, ../../sass/pdf-reports.scss */
+.logbook-report .new-page, .logbook-report.new-page {
+  page-break-before: always;
+}
+/* line 140, ../../sass/pdf-reports.scss */
+.logbook-report li.formInfo {
+  position: relative;
+}
+/* line 144, ../../sass/pdf-reports.scss */
+.logbook-report .circle {
+  float: left;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  padding: 7px 3px 0 3px;
+  text-align: center;
+  color: White;
+  margin-left: 45px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-right: 30px;
+}
+/* line 161, ../../sass/pdf-reports.scss */
+.logbook-report .fieldcircle {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  padding: 5px 3px 0 3px;
+  text-align: center;
+  font-size: xx-small;
+  color: White;
+  margin-left: 10px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-right: 10px;
+}

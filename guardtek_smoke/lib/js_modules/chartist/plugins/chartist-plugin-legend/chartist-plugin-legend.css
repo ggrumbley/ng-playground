@@ -1,0 +1,35 @@
+﻿.ct-legend {
+    position: relative;
+    z-index: 10; 
+    list-style-type: none;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-left: 0px;
+}
+
+.ct-legend li {
+    position: relative;
+    padding-left: 23px;
+    margin-bottom: 3px;
+    font-size: 10px;
+}
+
+.ct-legend  li:before {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    left: 0;
+    content: '';
+    border: 3px solid transparent;
+    border-radius: 2px;
+}
+
+.ct-legend li.inactive:before {
+    background: transparent;
+}
+
+.ct-legend .ct-legend-inside {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

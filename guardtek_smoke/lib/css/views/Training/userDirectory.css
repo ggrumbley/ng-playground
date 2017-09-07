@@ -1,0 +1,31 @@
+﻿/* File Created: novembre 26, 2014 */
+.userCard {
+    height: 180px;
+    width: 380px;
+	float: left;
+	padding: 6px;
+	font-size: 12px;
+	margin: 4px
+}
+.handCursor {
+    cursor: pointer;
+}
+.cardButton {
+    width: 20px;    
+    height: 140px;   
+}
+.identityPicture {
+    width: 110px;
+    height: 140px;    
+}
+.cardName {
+    position: relative;
+    font-weight: bold;
+    left: 10px;
+    height: 19px;    
+}
+.cardField {
+    position: relative;
+    left: 10px;
+    height: 19px;    
+}

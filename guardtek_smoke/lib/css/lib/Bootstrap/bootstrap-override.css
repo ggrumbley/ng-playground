@@ -1,0 +1,58 @@
+﻿/* File Created: octobre 21, 2013 */
+.btn-green {
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#a6c604 ), to(#7da203));
+  background-image: -webkit-linear-gradient(top, #a6c604, 0%, #7da203, 100%);
+  background-image: -moz-linear-gradient(top, #a6c604 0%, #7da203 100%);
+  background-image: linear-gradient(to bottom, #a6c604 0%, #7da203 100%);
+  background-repeat: repeat-x;
+  border-color: #668400;
+  color: #FFFFFF;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa6c604', endColorstr='#ff7da203', GradientType=0);
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow:0 1px 0 black;
+}
+
+.btn-green:hover, .btn-green:active, .btn-green.active, .open .dropdown-toggle.btn-green {
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#b3d600 ), to(#95c200));
+  background-image: -webkit-linear-gradient(top, #b3d600, 0%, #95c200, 100%);
+  background-image: -moz-linear-gradient(top, #b3d600 0%, #95c200 100%);
+  background-image: linear-gradient(to bottom, #b3d600 0%, #95c200 100%);
+  background-repeat: repeat-x;
+  border-color: #85aa05;
+  color: #FFFFFF;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffb3d600', endColorstr='#ff95c200', GradientType=0);
+}
+
+.form-horizontal .control-label.label-sm,
+.form-horizontal .radio.label-sm,
+.form-horizontal .checkbox.label-sm,
+.form-horizontal .radio-inline.label-sm,
+.form-horizontal .checkbox-inline.label-sm {
+  font-size: 13px;
+  padding-top: 5px;
+}
+
+.modal {
+    display: block;
+    overflow-y: auto;
+}
+
+body.modal-open {
+    margin-right: 0px;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #404956;
+}
+
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover, 
+.nav-tabs > li.active > a:focus {
+    border: 1px solid #404956;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs > li > a:hover {
+    border-bottom-color: #404956;
+}

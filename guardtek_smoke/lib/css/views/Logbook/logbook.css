@@ -1,0 +1,38 @@
+﻿.lb-title-2 { font-size:120%; font-weight:bold; 	color:rgb(64, 73, 86); }
+.lb-title-3 { font-size:105%; font-weight:bold; 	color:rgb(64, 73, 86); }
+.lb-title-4 { font-size:100%; font-weight:bold; 	color:rgb(64, 73, 86); }
+
+table.lb-formating { font-size:.85em; border-width:0px; width:100%; padding:0px; margin:0px; border-spacing:0px; }
+table.lb-formating tr { border-width:0px; padding:0px; margin:0px; }
+table.lb-formating tr td { border-width:0px; margin:0px; }
+
+.lb-data-loading { background-color:#000000; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; opacity:.4; position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:1; }
+
+#options_filter_type_switch { cursor:pointer; }
+#options_filter_type_switch:hover { background-color:rgb(226, 229, 235); }
+
+.options_filter_type { cursor:pointer; }
+.options_filter_type:hover { background-color:rgb(226, 229, 235); }
+
+
+.alt .agv2-container { border:2px solid rgb(64, 73, 86); }
+.alt .agv2-table { border-collapse:separate; }
+.alt .agv2-table tbody tr { background:linear-gradient(#f8f9fd, #f0f1f5) rgb(255, 255, 255); }
+.alt .agv2-table tbody tr:nth-child(odd) { background: linear-gradient(#e8e9ed, #f0f1f5) rgb(241, 242, 245); }
+.alt .agv2-table tbody tr:nth-child(even) { background: linear-gradient(#f8f9fd, #f0f1f5) rgb(255, 255, 255); }
+.alt .agv2-table tbody tr.agv2-clickable:hover { background:linear-gradient(#d8d9dd, #e0e1e5), rgb(226, 229, 235); }
+.alt .agv2-table th { border-width:0px 1px 1px 0px; }
+.alt .agv2-table th:first-child , .alt .agv2-table th:last-child  { border-width:0px 0px 1px; }
+.alt .agv2-table td { border-color:#ffffff rgb(154, 160, 171) #c1c6cA; border-style:solid; padding:4px; }
+.alt .agv2-table td { border-width:1px 1px 1px 0px; }
+.alt .agv2-table td:first-child , .alt .agv2-table td:last-child  { border-width:1px 0px; }
+
+table .log-icon { width:41px; height:41px; vertical-align:middle; }
+
+td.lb-priority-p0 { background-color:#7aba27; background:linear-gradient(#a7c704, #7ca103); }
+td.lb-priority-p1 { background-color:#ee963f; background:linear-gradient(#eeb03f, #ee963f); }
+td.lb-priority-p2 { background-color:#d12f2d; background:linear-gradient(#d12f2d, #ab2220); }
+
+td.lb-event-p0 { font-size:105%; font-weight:bold; color:#7aba27; }
+td.lb-event-p1 { font-size:105%; font-weight:bold; color:#ee963f; }
+td.lb-event-p2 { font-size:105%; font-weight:bold; color:#d12f2d; }

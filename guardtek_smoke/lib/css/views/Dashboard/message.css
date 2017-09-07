@@ -1,0 +1,162 @@
+﻿.message-control 
+{
+    border:1px solid black;
+    height:240px;
+    width:100%;
+}
+
+.message-div
+{
+    border: 0px solid black;
+    width: 97%;
+    margin-top: 10px;
+    position: relative;
+    height:70px;
+}
+
+#messages-unread-list 
+{
+    list-style-type: none;
+}
+
+#messages-archived-list 
+{
+    list-style-type: none;
+}
+
+.message-buttons {
+    border: 0px solid black;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    width: 40px;
+    padding-top: 5px;
+}
+
+.message-buttons-remove 
+{
+    margin-top:5px;
+}
+
+.message-details
+{
+    border:0px solid black;    
+    margin-left:50px;
+}
+
+.message-date
+{
+    padding-top: 5px;
+    font-weight:bold;
+    position:absolute;
+    width:85%;
+    text-align:right;
+}
+
+.message-author
+{
+    padding-top: 5px;
+    font-weight:bold;
+    position:absolute;
+}
+
+.message-content{
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding-top: 25px;
+    border: 0;
+}
+
+.message-content > div{
+    height:50px;
+    overflow:auto;
+}
+
+.message-write 
+{
+    margin-top:25px;
+    width:100%;
+}
+
+.message-write div
+{
+    position:absolute;
+}
+
+.message-write-post
+{
+    top:50px;
+    height:25px;
+    width: 100%;
+    left:20px;
+}
+
+.message-write-post div
+{
+    display: inline;
+    margin-left: 20px;
+}
+
+.message-write-post label
+{
+    vertical-align: middle;    
+    padding-right:20px;
+}
+
+.message-write-duration
+{
+    height:25x;
+    width:50%;
+    top: 200px;
+}
+
+.message-write-duration div
+{
+    display: inline;
+}
+
+.message-write-duration label
+{
+    vertical-align: middle;    
+    padding-right:20px;
+}
+
+.message-write-content
+{
+    height:100px;
+    width: 95%;
+    top: 80px;
+    vertical-align:top;
+}
+
+.message-write-content label
+{
+    vertical-align: middle;
+    text-align: right;
+    width: 20%;
+    padding-right:20px;
+}
+
+.message-write-content textarea
+{
+    width:80%;
+    height:70%;
+    border: 1px solid grey;
+    border-left: 2px solid grey;
+    vertical-align: middle;
+    resize:none;
+}
+
+.message-write-send
+{
+    height:25px;
+    width: 90%;
+    top: 200px;
+    text-align: right;
+}
+
+.ui-jqgrid tr.jqgrow td
+{
+    white-space: normal !important;
+}

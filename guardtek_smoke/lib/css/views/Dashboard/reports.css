@@ -1,0 +1,46 @@
+﻿.reports-control 
+{
+    border:1px solid black;
+    height:240px;
+    width:100%;
+}
+
+.report-container
+{
+}
+
+.report-item-container
+{
+    display: inline-block;
+    margin-right: 170px;
+    margin-top: 10px;
+    font-size: 13pt;
+    border: 1px solid black;
+    padding: 0px 0px 0px 0px;
+    width: 200px;
+    height: 170px;
+    background-color: #EDEEF2;
+}
+
+.report-item-text
+{
+    padding: 10px 10px 10px 10px;
+    position:absolute;
+    width: 180px;
+    height: 125px;
+}
+
+.report-item-new
+{
+    position:absolute;
+    height: 27px;
+    top: 205px;
+    text-align:center;
+    width: 200px;
+    padding: 0px !important;
+}
+
+.report-item-new label
+{
+    font-weight: bold;
+}
