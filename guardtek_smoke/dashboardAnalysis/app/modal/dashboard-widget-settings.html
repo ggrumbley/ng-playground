@@ -1,0 +1,276 @@
+﻿<div class="modal-header stepsHeader">
+
+    <div>
+        <button type="button" ng-click="vm.cancel()" class="close btn btn-default btn-sm" style="cursor: pointer; margin-right: 15px; color: Gray"><span class="glyphicon glyphicon-remove sm"></span></button>
+        <h4 class="modal-title heading" id="H1">&nbsp;&nbsp;<i class="fa fa-cog fa-1x" aria-hidden="true" style="vertical-align: middle"></i> <span>&nbsp;$DashboardModule.Settings.WidgetSettings</span></h4>
+    </div>
+
+    <div class="NavbarContainer">
+        <ul class="nav nav-pills widgetNavbar">
+            <li class="nav-item widgetStep" ng-repeat="step in vm.widgetSteps">
+                <div class="space">
+                    <button type="button" class="nav-link btn navbarCircle btn-default btn-sm" ng-class="{activeNavbar: $index === vm.getCurrentStep()}" ng-click="vm.goToStep($index);vm.getFilters($index)">{{$index + 1}}</button>
+                    <div style="margin: 10px" ng-click="vm.goToStep($index)" class="title"> {{vm.translate('$DashboardModule.Settings.' + step)}} </div>
+                </div>
+            </li>
+        </ul>
+        <div class="dividerLine"></div>
+    </div>
+</div>
+
+<div class="modal-body pad" ng-class="{'overflow-auto': vm.getCurrentStep() === 3 }">
+
+<div ng-switch on="vm.widgetStepSelection">
+
+<!-- First Step -->
+<div ng-switch-when="WidgetTheme">
+    <div class="row">
+        <div class="col-sm-12">
+            <label>$DashboardModule.Settings.WidgetType</label> <span style="color: Gray; font-size: xx-small;">( $DashboardModule.Settings.SelectOne )</span>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div ng-repeat="graph in vm.lists.graphs">
+            <div class="col-sm-2" ng-show="vm.isGraphEnabled(graph)">
+                <a href="" ng-click="vm.setWidgetGraph(graph)">
+                    <img ng-src="../Content/img/views/dashboard/{{graph.Value}}.png" ng-class="{selectedItem: graph.Value === vm.selectedWidget.Graph.Value}"/>
+                </a>
+            </div>
+            <div ng-if="($index + 1) % 4 === 0"><br/><br/><br/><br/><br/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Second Step -->
+<div ng-switch-when="WidgetSetup" class="form-horizontal">
+
+    <div class="form-group sm">
+        <div class="col-sm-4" style="line-height: 30px">
+            <label>$DashboardModule.Settings.Report</label>
+        </div>
+        <div class="col-sm-8">
+
+            <div uib-dropdown on-toggle="toggled(open)">
+                <a class="btn btn-default btnDropdown" uib-dropdown-toggle ng-class="{disabled : vm.isDataLoading()}">
+                    <span style="float: left">{{vm.selectedWidget.ReportType.ValueTranslated}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="dateDropdown">
+                    <li ng-repeat="reportType in vm.lists.reportTypes">
+                        <a ng-click="vm.selectReportType(reportType)">{{reportType.ValueTranslated}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group sm">
+        <div class="col-sm-4" style="line-height: 30px">
+            <label>$DashboardModule.Settings.ReportOn</label>
+        </div>
+
+        <div class="col-sm-6">{{vm.selectedWidget.ReportCategory.Value}}
+            <div disabled uib-dropdown on-toggle="toggled(open)">
+                <a class="btn btn-default btnDropdown" uib-dropdown-toggle ng-class="{disabled : vm.isDataLoading()}">
+                    <span style="float: left">{{vm.selectedWidget.ReportCategory.Name || vm.selectedWidget.ReportCategory.Category}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="dateDropdown">
+                    <li ng-repeat="(category,reportCategories) in  vm.selectedWidget.lists.reportCategories | groupBy:'Category' ">
+                        <a ng-click="vm.selectReportCategory(category)" style="font-weight: bold"> {{category}}</a>
+                        <ul >
+                            <li ng-repeat="reportCategory in  reportCategories">
+                                <a class="dropdownItems" ng-click="vm.selectReportCategory(category,reportCategory)"> {{reportCategory.Name}} </a>
+                            </li>
+                            <li class="divider" ng-show="!$last"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-2 dropdown-loading-indicator" ng-if="vm.categoriesAreLoading">
+            <div as-ui-loading></div>
+        </div>
+
+    </div>
+
+    <div class="form-group sm">
+        <div class="col-sm-4" style="line-height: 30px">
+            <label>$DashboardModule.Settings.Dataset</label>
+        </div>
+        <div class="col-sm-6">
+            <div uib-dropdown on-toggle="toggled(open)">
+                <a class="btn btn-default btnDropdown" uib-dropdown-toggle ng-class="{disabled : vm.isDataLoading()}">
+                    <span style="float: left">{{vm.selectedWidget.DatasetObj.ValueTranslated}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="dateDropdown">
+                    <li ng-repeat="(category,datasets) in vm.selectedWidget.lists.datasets | groupBy:'Category' ">
+                        <span class="dropdownCategory">{{category}}</span>
+                        <ul >
+                            <li ng-repeat="dataset in datasets">
+                                <a class="dropdownItems" ng-click="vm.selectReportDataset(dataset)"> {{dataset.ValueTranslated}}</a>
+                            </li>
+                            <li class="divider" ng-show="!$last"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2 dropdown-loading-indicator" ng-if="vm.dataSetIsLoading">
+            <div as-ui-loading></div>
+        </div>
+    </div>
+
+    <div class="form-group sm">
+        <div class="col-sm-4" style="line-height: 30px">
+            <label>$DashboardModule.Settings.Calculate</label>
+        </div>
+        <div class="col-sm-6">
+            <div uib-dropdown on-toggle="toggled(open)">
+                <a class="btn btn-default btnDropdown" uib-dropdown-toggle ng-class="{disabled : vm.isDataLoading()}">
+                    <span style="float: left">{{vm.selectedWidget.Statistics.ValueTranslated}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="dateDropdown">
+                    <li ng-repeat="statistics in vm.lists.statistics">
+                        <a ng-click="vm.selectReportStatistics(statistics)" ng-class="{'enable': statistics.enabled,'disabled': !statistics.enabled}">{{statistics.ValueTranslated}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div uib-dropdown on-toggle="toggled(open)" ng-if="vm.isTimePeriodEnabled()">
+                <a class="btn btn-default btnDropdown" uib-dropdown-toggle style="min-width: 90px !important;" ng-class="{disabled : vm.isDataLoading()}">
+                    <span style="float: left">{{vm.selectedWidget.TimePeriod.ValueTranslated}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="dateDropdown" style="min-width: 120px !important;">
+                    <li ng-repeat="timePeriod in vm.lists.timePeriods">
+                        <a ng-click="vm.setTimePeriod(timePeriod)" ng-class="{'enable': timePeriod.enabled,'disabled': !timePeriod.enabled }">{{timePeriod.ValueTranslated}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Third Step -->
+<div ng-switch-when="PreviewWidget">
+    <div class="form-horizontal">
+        <div class="form-group sm">
+            <div class="col-sm-5"><label class="caps">$DashboardModule.Settings.WidgetBackgroundColor</label>
+            </div>
+            <div class="col-sm-7">
+                <div ng-repeat="color in vm.lists.backgroundColors" style="float: left">
+                    <button type="button" class="btn circle {{color.Value}}" ng-class="{selectedItem: color.Value === vm.selectedWidget.Color.Value}" ng-click="vm.setBackgroundColor(color)"></button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="form-group sm">
+            <div class="col-sm-5"><label class="caps">$DashboardModule.Settings.GraphColor</label>
+            </div>
+            <div class="col-sm-7">
+                <div ng-repeat="color in vm.lists.graphColors" style="float: left">
+                    <button type="button" class="btn circle {{color.Value}}" ng-class="{selectedItem: color.Value === vm.selectedWidget.GraphColor.Value}" ng-click="vm.setGraphColor(color)"></button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="form-group sm">
+            <div class="col-sm-5"><label class="caps">$DashboardModule.Settings.Title</label>
+            </div>
+            <div class="col-sm-7">
+                <input maxlength="20" type="text" ng-model="vm.selectedWidget.Title"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal" ng-if="vm.graphTypeSupportsLegend()">
+        <div class="form-group sm">
+            <div class="col-sm-5"><label class="caps">Show Legend</label>
+            </div>
+            <div class="col-sm-7">
+                <span as-yes-no style="vertical-align: middle" value="vm.selectedWidget.Settings.ShowLegend" on-change="vm.legendValueChanged(value)"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-line form-horizontal" style="height: 0px">&nbsp;</div>
+
+    <div class="form-group clearfix mar-vert">
+        <div class="col-sm-4 col-sm-offset-4 {{vm.selectedWidget.Color.Value}}" ng-if="vm.selectedWidget.Graph && vm.selectedWidget.Graph.Value === 'Data'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4" style="padding-top: 10px;">{{vm.selectedWidget.Title}}</div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 5px" id="icons">
+                        <h2 class="icon icon-arrow-up-right2" style="color: #527E25"></h2>
+                    </div>
+                    <div class="col-md-4" style="text-align: left; padding-left: 0">
+                        <h2 style="color: inherit">100</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-sm-offset-2 {{vm.selectedWidget.Color.Value}}" ng-if="vm.selectedWidget.Graph && vm.selectedWidget.Graph.Value !== 'Data'">
+            <div>{{vm.selectedWidget.Title}}</div>
+            <nvd3 options="vm.previewChart.options" data="vm.previewChart.data" api="vm.previewChart.api" config="{refreshDataOnly: false, deepWatchData: true}" width="300px!important"></nvd3>
+        </div>
+    </div>
+</div>
+
+<!-- Fourth Step -->
+<div ng-switch-when="Filters">
+
+    <!-- Loading screen -->
+    <div ng-if="vm.areFiltersLoading()" style="min-height: 400px; display: flex; justify-content: center; flex-direction: column">
+        <div as-ui-loading style="align-self: center" class="big"></div>
+    </div>
+
+    <!-- Step Start-->
+    <div ng-if="!vm.areFiltersLoading()">
+
+        <div ng-if="!vm.filtersAvailable()" style="min-height: 150px; display: flex; justify-content: center; align-items: center;">
+            <span style="font-size: 18px; font-weight: bold;">No filters available for selected data set.</span>
+        </div>
+
+        <div ng-if="vm.filtersAvailable()">
+            <div class="col-sm-12">
+                <h4 class="border-line"><i class="fa fa-filter"></i>&nbsp;$DashboardModule.Settings.FilterBy<small>( $DashboardModule.Settings.Optional )</small></h4>
+            </div>
+
+            <br/><br/>
+
+            <div ng-if="vm.selectedWidget.ReportType.ValueTranslated ==='$DashboardModule.Settings.Event' || vm.selectedWidget.ReportType.ValueTranslated ==='$DashboardModule.Settings.Incident'">
+
+                <div widget-filters filters-relation='OR'></div>
+
+                <div widget-filters filters-relation='AND'></div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Step End -->
+</div>
+<!-- Fourth Step End -->
+
+</div>
+</div>
+
+<div class="modal-footer gray-bkg" id="modalFooter">
+    <div class="col-sm-7" style="text-align: left">
+        <button class="btn default-btn" ng-if="vm.getCurrentStep() > 0 " ng-click="vm.goToStep(vm.getCurrentStep() - 1)">$DashboardModule.Settings.Back</button>
+        <button class="btn filter-btn" ng-if="vm.getCurrentStep() === 2 " ng-click="vm.goToStep(vm.getCurrentStep() + 1);vm.getFilters(3)">
+            <div class="glyphicon glyphicon-filter"></div>&nbsp;&nbsp; $DashboardModule.Settings.AddFilters
+        </button>
+    </div>
+    <div class="col-sm-5" style="text-align: right">
+        <button class="btn primary-btn" ng-if="vm.getCurrentStep() === 0" ng-click="vm.goToStep(vm.getCurrentStep() + 1)">$DashboardModule.Settings.Next</button>
+
+        <button class="btn primary-btn" ng-if="vm.getCurrentStep() === 1" ng-disabled="!vm.dataStepIsValid()" ng-click="vm.goToStep(vm.getCurrentStep() + 1)">$DashboardModule.Settings.Next</button>
+
+        <button class="btn primary-btn" ng-if="vm.getCurrentStep() === 2 || vm.getCurrentStep() === 3 || vm.getCurrentStep() === 1" ng-disabled="!vm.widgetValid()" ng-click="vm.ok()">$DashboardModule.Settings.Finish</button>
+    </div>
+</div>
+
+

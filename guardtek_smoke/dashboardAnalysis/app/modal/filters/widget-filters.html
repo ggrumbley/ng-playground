@@ -1,0 +1,107 @@
+﻿<fieldset class="fieldset-box">
+    <legend ng-if="vm.filtersRelation === 'OR'">
+        $DashboardModule.Settings.Match&nbsp;<b class="text-danger">$DashboardModule.Settings.ANY</b>&nbsp;$DashboardModule.Settings.FollowingRules
+        <small>$DashboardModule.Settings.AnyFilterDescription</small>
+    </legend>
+
+    <legend ng-if="vm.filtersRelation === 'AND'">
+        $DashboardModule.Settings.MustMatch&nbsp;<b class="text-danger">$DashboardModule.Settings.ALL</b>&nbsp;$DashboardModule.Settings.FollowingRules
+        <small>$DashboardModule.Settings.AllFilterDescription</small>
+    </legend>
+
+    <div class="form-group" ng-if="vm.filterExists(vm.filtersRelation)">
+        <div class="col-sm-4">$NotificationModule.Settings.Field</div>
+        <div class="col-sm-3">$NotificationModule.Settings.Operator</div>
+        <div class="col-sm-4"></div>
+    </div>
+
+    <div ng-repeat="filter in vm.selectedWidget.ExistingFilters | filter:{ Relation: vm.filtersRelation }">
+        <div class="form-group border-line" style="display: flex; align-items: center; padding-bottom: 15px;">
+            <div class="col-sm-4">{{filter.FieldName}}</div>
+            <div class="col-sm-3">{{filter.MathFieldOperator}}</div>
+            <div class="col-sm-4">{{filter.FieldValue}}</div>
+            <div class="col-sm-1" style="text-align: right">
+                <i class="fa fa-times-circle" ng-click="vm.removeExistingFilter(filter)" style="font-size: 25px; color: #ccc" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+
+    <div ng-repeat="exp in vm.selectedWidget.Filter.Expressions | filter:{ Relation: vm.filtersRelation }">
+
+        <div class="form-group border-line" style="padding-bottom: 40px">
+            <div class="col-sm-4">
+                <div uib-dropdown on-toggle="toggled(open)">
+                    <a class="btn btn-default btnDropdown" style="min-width: 180px !important" uib-dropdown-toggle>
+                        <span class="cropText" ng-model="exp.FieldName">{{exp.FieldName}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                    <ul class="dropdown-menu" style="min-width: 180px !important" uib-dropdown-menu aria-labelledby="dateDropdown">
+                        <li ng-repeat="(category,fields) in vm.selectedWidget.fields | groupBy:'Category' ">
+                            <span class="dropdownCategory">{{category}}</span> 
+                            <ul >
+                                <li ng-repeat="field in  fields">
+                                    <a class="dropdownItems" ng-click="vm.selectField(exp, field.FieldName)"> {{field.FieldName}} </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div uib-dropdown on-toggle="toggled(open)">
+                    <a class="btn btn-default btnDropdown" style="min-width: 130px !important" uib-dropdown-toggle>
+                        <span class="cropText" ng-model="exp.FieldOperator">{{exp.operator.Text}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                    <ul class="dropdown-menu" style="min-width: 130px !important" uib-dropdown-menu aria-labelledby="dateDropdown">
+                        <li ng-repeat="operator in exp.Operators">
+                            <a ng-click="vm.selectFieldOperator(exp, operator)">{{operator.Text}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div ng-if="!exp.FieldType">
+                    <input name="field" type="text" style="min-width: 150px !important"/>
+                </div>
+                <div ng-if="exp.FieldType === 'Characters'">
+                    <input name="field" type="text" id="field-value-{{exp.Id}}" ng-model="exp.FieldValue" style="min-width: 150px !important"/>
+                </div>
+                <div ng-if="exp.FieldType === 'Number'">
+                    <input name="field" type="number" ng-model="exp.FieldValue" style="min-width: 150px !important"/>
+                </div>
+                <div ng-if="['Boolean', 'Radio2'].indexOf(exp.FieldType) >= 0" class="btn-group">
+                    <label class="btn selection-btn" ng-model="exp.FieldValue" uib-btn-radio="'1'">$Global.Text.Yes</label>
+                    <label class="btn selection-btn" ng-model="exp.FieldValue" uib-btn-radio="'0'">$Global.Text.No</label>
+                </div>
+                <div ng-if="['Radio3', 'PredefinedList'].indexOf(exp.FieldType) >= 0">
+                    <div uib-dropdown on-toggle="toggled(open)">
+                        <a class="btn btn-default btnDropdown" style="min-width: 180px !important" uib-dropdown-toggle>
+                            <span class="cropText" ng-model="exp.fieldValueObject">{{exp.fieldValueObject.Text}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                        <ul class="dropdown-menu" style="min-width: 180px !important" uib-dropdown-menu aria-labelledby="dateDropdown">
+                            <li ng-repeat="field in  exp.EventFieldItems">
+                                <a ng-click="vm.selectFieldValue(exp, field)">{{field.Text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div ng-if="exp.FieldType === 'CustomList'">
+                    <div uib-dropdown on-toggle="toggled(open)">
+                        <a class="btn btn-default btnDropdown" style="min-width: 120px !important" uib-dropdown-toggle>
+                            <span class="cropText" ng-model="exp.fieldValueObject">{{exp.fieldValueObject.Name}}</span><span style="float: right"><b class="caret"></b></span> </a>
+                        <ul class="dropdown-menu" style="min-width: 120px !important" uib-dropdown-menu aria-labelledby="dateDropdown">
+                            <li ng-repeat="field in exp.CustomListItems track by field.Id">
+                                <a ng-click="vm.selectFieldValue(exp, field)">{{field.Name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1" style="text-align: right">
+                <i class="fa fa-times-circle" ng-click="vm.removeFilter(exp)" style="font-size: 25px; color: #ccc" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right" style="padding-top: 10px">
+        <i class="fa fa-plus-circle" ng-click="vm.addFilter(vm.filtersRelation)" style="font-size: 25px; color: #4682bd"></i>
+    </div>
+
+</fieldset>

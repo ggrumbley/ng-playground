@@ -6,9 +6,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
-
+  <body ng-controller="SportsStoreCtrl as vm">
+    <div class="navbar navbar-inverse">
+      <a href="#" class="navbar-brand">SPORTS STORE</a>
+    </div>
+    <div class="panel panel-default row" ng-controller="ProductListCtrl as pl">
+      <div class="col-xs-3">
+        <a class="btn btn-block btn-default btn-lg"
+           ng-click="pl.selectCategory()">
+          Home
+        </a>
+        <a class="btn btn-block btn-default btn-lg ng-class:pl.getCategoryClass(item)"
+           ng-repeat="item in vm.data.products | orderBy: 'category' | Unique:'category'"
+           ng-click="pl.selectCategory(item)">
+          {{item}}
+        </a>
+      </div>
+      <div class="col-xs-8">
+        <div class="well" ng-repeat="item in vm.data.products | filter:pl.categoryFilterFn | Range:pl.selectedPage:pl.pageSize">
+          <h3>
+            <strong>{{item.name}}</strong>
+            <span class="pull-right label label-primary">
+              {{item.price | currency}}
+            </span>
+          </h3>
+          <span class="lead">{{item.description}}</span>
+        </div>
+        <div class="pull-right btn-group">
+          <a ng-repeat="page in vm.data.products | filter:pl.categoryFilterFn | PageCount:pl.pageSize"
+             ng-click="pl.selectPage($index + 1)"
+             class="btn btn-default ng-class:pl.getPageClass($index + 1)">
+            {{$index + 1}}
+          </a>
+        </div>
+      </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.6.6/angular-resource.min.js"></script>
+    <script src="https://code.angularjs.org/1.6.6/angular-route.min.js"></script>
 
+    <script src="./app/app.module.js"></script>
+    <script src="./app/unique.filter.js"></script>
+    <script src="./app/sports-store.ctrl.js"></script>
+    <script src="./app/product-list.ctrl.js"></script>
   </body>
 </html>

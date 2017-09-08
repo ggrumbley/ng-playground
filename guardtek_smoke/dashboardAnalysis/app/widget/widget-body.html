@@ -1,0 +1,17 @@
+﻿<div class="container-fluid" style="height: 100%" ng-if="widget.Graph && widget.Graph.Value === 'Data'">
+
+    <div class="row" style="display: flex; align-items: center; justify-content: center; height: 100%">
+        <div style="display: inline-block;">
+            <div style="padding-left: 0; display: inline-block" id="icons">
+                <span class="icon icon-arrow-up-right2" style="font-size: x-large !important; color: #527E25" ng-if="widget.comparisonTotal && widget.comparisonTotal < widget.total"></span>
+                <span class="icon icon-arrow-down-right2" style="font-size: x-large !important; color: red" ng-if="widget.comparisonTotal && widget.comparisonTotal > widget.total"></span>
+            </div>
+            <div style="text-align: left; padding-left: 5px; display: inline-block">
+                <span style="color: inherit; font-size: x-large">{{widget.total || 0}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nvd3 style="padding-bottom: 10px;" ng-if="widget.Graph && widget.Graph.Value !== 'Data'" options="widget.chart.options" data="widget.chart.data" api="widget.chart.api" config="{refreshDataOnly: false, deepWatchData: true}" events="events"></nvd3>
+

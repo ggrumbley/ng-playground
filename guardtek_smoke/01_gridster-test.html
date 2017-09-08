@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <title>Gridster2 Test</title>
+    <link href="./lib/css/lib/D3/nv.d3.css" rel="stylesheet" type="text/css" />
+    <link href="./lib/css/lib2/angular-gridster2/gridster.css" rel="stylesheet" type="text/css" />
+    <link href="./lib/css/lib/multiSelect/isteven-multi-select.css" rel="stylesheet" type="text/css" />
+    <link href="./lib/css/views/Dashboard/dashboardAnalysis/style.css" rel="stylesheet" type="text/css" />
+    <link href="./lib/css/lib2/icomoon.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body ng-controller="mainCtrl as vm">
+    <gridster options="vm.options">
+      <gridster-item item="item" ng-repeat="item in vm.dashboard"></gridster-item>
+    </gridster>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="./lib/js_modules/angular-gridster2/gridster.js" type="text/javascript"></script>
+    <script>
+      angular
+        .module('app', ['angular-gridster2'])
+        .controller('mainCtrl', mainCtrl)
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.options = {
+          gridType: 'fit',
+          itemChangeCallback: vm.itemChange,
+          margin: 10,
+          outerMargin: true,
+          draggable: {
+            enabled: true,
+            // stop: eventStop
+          },
+          resizable: {
+            enabled: true,
+            // stop: eventStop
+          }
+        };
+
+        vm.itemchange = () => {
+          console.log("Item moved!");
+        }
+
+        vm.dashboard = [
+          { cols: 2, rows: 1, y: 0, x: 0 },
+          { cols: 2, rows: 2, y: 0, x: 2 }
+        ]
+      }
+    </script>
+  </body>
+</html>

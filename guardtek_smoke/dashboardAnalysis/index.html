@@ -1,14 +1,51 @@
 <!DOCTYPE html>
-<html ng-app="app">
-  <head>
-    <title>Sports Store</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
+<html>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<head>
+  <title>Dashboard</title>
+  <link href="../lib/css/lib/D3/nv.d3.css" rel="stylesheet" type="text/css" />
+  <link href="../lib/css/lib2/angular-gridster2/gridster.css" rel="stylesheet" type="text/css" />
+  <link href="../lib/css/lib/multiSelect/isteven-multi-select.css" rel="stylesheet" type="text/css" />
+  <link href="../lib/css/views/Dashboard/dashboardAnalysis/style.css" rel="stylesheet" type="text/css" />
+  <link href="../lib/css/lib2/icomoon.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-  </body>
+<body>
+  <script src="../lib/js_modules/angularjs1.6.1/angular.min.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/D3/d3.min.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/D3/nv.d3.min.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/D3/angular-nvd3.min.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/angular-gridster2/gridster.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/multiSelect/isteven-multi-select.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/angularRandomColor/angular-color-this.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/canvg/rgbcolor.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/canvg/StackBlur.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/canvg/canvg.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/html2canvas/html2canvas.min.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/html2canvas/html2canvas.svg.min.js" type="text/javascript"></script>
+  <script src="../lib/js_modules/jsPDF/jspdf.min.js" type="text/javascript"></script>
+
+  <script src="./app/app.js" type="text/javascript"></script>
+  <script src="./app/shared/dataService.js" type="text/javascript"></script>
+  <script src="./app/shared/codeService.js" type="text/javascript"></script>
+  <script src="./app/shared/dashboardService.js" type="text/javascript"></script>
+  <script src="./app/widget/widgetBodyDirective.js" type="text/javascript"></script>
+  <script src="./app/modal/dashboardWidgetModalCtrl.js" type="text/javascript"></script>
+  <script src="./app/modal/confirmation/confirmationModalCtrl.js" type="text/javascript"></script>
+  <script src="./app/modal/dashboardWidgetGroupModalCtrl.js" type="text/javascript"></script>
+  <script src="./app/modal/filters/filtersService.js" type="text/javascript"></script>
+  <script src="./app/modal/filters/widgetFiltersCtrl.js" type="text/javascript"></script>
+  <script src="./app/modal/filters/widgetFiltersDirective.js" type="text/javascript"></script>
+  <script src="./app/main/dashboardAnalysisCtrl.js" type="text/javascript"></script>
+  <script src="./app/main/dashboardAnalysisDirective.js" type="text/javascript"></script>
+
+  <div id="ng-app" ng-app="dashboardAnalysisApp">
+    <div dashboard-analysis></div>
+  </div>
+
+
+</body>
+
 </html>
