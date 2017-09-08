@@ -21,21 +21,12 @@
       vm.selectedPage = 1;
     }
 
-    vm.selectPage = (newPage) => {
-      vm.selectedPage = newPage;
-    }
+    vm.selectPage = (newPage) => vm.selectedPage = newPage;
 
-    vm.categoryFilterFn = (product) => {
-      return !selectedCategory || product.category === selectedCategory;
-    }
+    vm.categoryFilterFn = (product) => !selectedCategory || product.category === selectedCategory;
 
-    vm.getCategoryClass = (category) => {
-      return selectedCategory === category ? PRODUCT_LIST_ACTIVE_CLASS : "";
-    }
+    vm.getCategoryClass = (category) => selectedCategory === category ? PRODUCT_LIST_ACTIVE_CLASS : "";
 
-    vm.getPageClass = (page) => {
-      return vm.selectedPage === page ? PRODUCT_LIST_ACTIVE_CLASS : "";
-    }
-
+    vm.getPageClass = (page) => vm.selectedPage === page ? PRODUCT_LIST_ACTIVE_CLASS : "";
   }
 })();
