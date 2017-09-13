@@ -1,0 +1,7 @@
+<form class="form-auth" ng-submit="ac.register()">
+  <h2>Register</h2>
+  <p class="text-warning">{{ac.error_message}}</p>
+  <input type="username" ng-model="ac.user.username" placeholder="Username" class="form-control"><br>
+  <input type="password" ng-model="ac.user.password" placeholder="Password" class="form-control"><br>
+  <input type="submit" value="Register" class="btn btn-primary" />
+</form>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <title>Tweedle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <div id='main' class="container">
+      <nav class="navbar-fluid navbar-default navbar-fixed-top">
+          <div class="container">
+            <a class="navbar-brand" ui-sref="home"> Tweedle </a>
+            <p class="navbar-text"> Learn the MEAN stack by building this tiny app</p>
+            <p class="navbar-right navbar-text"><a ui-sref="login">Login</a> or <a ui-sref="register">Register</a></p>
+          </div>
+        </nav>
+        <div class="col-md-offset-2 col-md-8">
+          <ui-view />
+        </div>
+    </div>
+    <!-- BRING IN ALL THE JAVASCRIPTS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
+    <script>
+      angular
+        .module('app', ['ui.router'])
+        .config(configFunc)
+        .controller('mainCtrl', mainCtrl)
+        .controller('authCtrl', authCtrl);
+
+      function configFunc($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise("/");
+
+        $stateProvider
+          .state("home", {
+            url: "/",
+            templateUrl: "./partials/_main.html",
+            controller: "mainCtrl as vm"
+          })
+          .state("login", {
+            url: "/login",
+            templateUrl: "./partials/_login.html",
+            controller: "authCtrl as ac"
+          })
+          .state("register", {
+            url: "/register",
+            templateUrl: "./partials/_register.html",
+            controller: "authCtrl as ac"
+          });
+      }
+
+      function mainCtrl() {
+        const vm = this;
+
+        vm.posts = [];
+        vm.newPost = {created_by: '', text: '', created_at: ''};
+
+        vm.post = () => {
+          vm.newPost.created_at = Date.now();
+          vm.posts.push(vm.newPost);
+          vm.newPost = {created_by: '', text: '', created_at: ''};
+        };
+      };
+
+      function authCtrl() {
+        const vm = this;
+
+        vm.user = { username: '', password: '' };
+        vm.error_message = '';
+
+        vm.login = () => vm.error_message = `login request for ${vm.user.username}`;
+        vm.register = () => vm.error_message = `registration request for ${vm.user.username}`;
+      }
+    </script>
+  </body>
+</html>
