@@ -1,0 +1,8 @@
+<div class="navbar-right">
+  <div class="navbar-text">
+      <b>Your cart:</b>
+      {{cs.itemCount()}} item(s),
+      {{cs.total() | currency}}
+  </div>
+  <a ui-sref="checkout" class="btn btn-default navbar-btn">Checkout</a>
+</div>

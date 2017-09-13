@@ -1,54 +1,189 @@
 <!DOCTYPE html>
 <html ng-app="app">
-  <head>
-    <title>Gridster2 Test</title>
-    <link href="./lib/css/lib/D3/nv.d3.css" rel="stylesheet" type="text/css" />
-    <link href="./lib/css/lib2/angular-gridster2/gridster.css" rel="stylesheet" type="text/css" />
-    <link href="./lib/css/lib/multiSelect/isteven-multi-select.css" rel="stylesheet" type="text/css" />
-    <link href="./lib/css/views/Dashboard/dashboardAnalysis/style.css" rel="stylesheet" type="text/css" />
-    <link href="./lib/css/lib2/icomoon.css" rel="stylesheet" type="text/css" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body ng-controller="mainCtrl as vm">
-    <gridster options="vm.options">
-      <gridster-item item="item" ng-repeat="item in vm.dashboard"></gridster-item>
-    </gridster>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script src="./lib/js_modules/angular-gridster2/gridster.js" type="text/javascript"></script>
-    <script>
-      angular
-        .module('app', ['angular-gridster2'])
-        .controller('mainCtrl', mainCtrl)
+<head>
+  <title>Gridster2 Test</title>
+  <link href="./lib/css/lib/D3/nv.d3.css" rel="stylesheet" type="text/css" />
+  <link href="./lib/css/lib2/angular-gridster2/gridster.css" rel="stylesheet" type="text/css" />
+  <link href="./lib/css/lib/multiSelect/isteven-multi-select.css" rel="stylesheet" type="text/css" />
+  <link href="./lib/css/views/Dashboard/dashboardAnalysis/style.css" rel="stylesheet" type="text/css" />
+  <link href="./lib/css/lib2/icomoon.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      function mainCtrl() {
-        const vm = this;
+<body ng-controller="mainCtrl as vm">
+  <div style="font-family: 'Open Sans'; font-weight: 600; color: #595858">
+    <!-- Whole page loading indicator -->
+    <div style="width: 100% !important; min-height: 700px !important; display: flex; justify-content: center; flex-direction: column"
+      ng-if="vm.initializing">
+      <div style="text-align: center; font-size: 20px; margin-bottom: 3px;">$DashboardModule.Dashboard.DashboardLoading</div>
+      <div as-ui-loading style="align-self: center" class="big"></div>
+    </div>
 
-        vm.options = {
-          gridType: 'fit',
-          itemChangeCallback: vm.itemChange,
-          margin: 10,
-          outerMargin: true,
-          draggable: {
-            enabled: true,
-            // stop: eventStop
-          },
-          resizable: {
-            enabled: true,
-            // stop: eventStop
+    <div class="container" style="width: 100% !important" class="modal-demo">
+
+      <!-- Welcome note if no widget groups -->
+      <div ng-if="vm.noWidgetGroups && !vm.initializing" style="width: 100% !important; min-height: 700px !important; display: flex; justify-content: center;">
+        <div style="align-self: center; height: 195px; width: 450px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19); position: relative">
+          <div style="font-family: 'Open Sans';">
+            <div style="font-size: 26px; font-weight: 600; text-align: left; margin-top: 30px; margin-left: 30px; color: #595858;">$DashboardModule.Dashboard.EmptyDashboard.Title</div>
+            <div style="font-size: 16px; margin-left: 30px; margin-top: 20px; color: #595858">$DashboardModule.Dashboard.EmptyDashboard.CallToActionToStart</div>
+            <div ng-click="vm.openWidgetGroupSettings(null, 'data-settings')" style="position: absolute; right: 14px; bottom: 10px;">
+              <div class="material-button button-green">
+                <i class="mdi mdi-24px mdi-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!vm.noWidgetGroups">
+
+        <div ng-click="vm.openWidgetGroupSettings(null, 'data-settings')" style="z-index:1000" class="material-button button-absolute-float button-green">
+          <i class="mdi mdi-24px mdi-plus"></i>
+        </div>
+
+        <div class="row">
+          <div class="material-box" style="padding-left: 0px; padding-right: 0px; margin-bottom: 5px; width: 1197px">
+            <span class="caps" style="display: inline-block; margin-top: 7px; margin-left: 10px; font-size: 15px; font-weight: bold">Dashboard View</span>
+            <a id="print-dashboard" class="glyphicon glyphicon-print" style="color: #75bc26; font-size: 15px; display: none" title="Print"></a>
+            <!--Hidden until implemented-->
+            <a id="export-dashboard-to-pdf" class="image-button-small icon-pdf" ng-click="vm.exportToPDF()" title="Export to PDF" style="margin-bottom: 7px; margin-top: 7px; margin-right: 10px; float: right;"></a>
+            <a id="export-dashboard-to-excel" class="glyphicon glyphicon-list-alt" style="color: #75bc26; font-size: 15px; display: none"
+              title="Export to Excel"></a>
+            <!--Hidden until implemented-->
+            <a id="send-dashboard" class="glyphicon glyphicon-envelope" style="color: #75bc26; font-size: 15px; display: none" title="Send email"></a>
+            <!--Hidden until implemented-->
+            <div style="clear: both"></div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <!-- Gridster -->
+          <div id="container">
+            <gridster options="vm.gridsterOptions" style="height: 810px; width: 1260px">
+
+              <!-- Widget Group -->
+              <gridster-item item="widgetGroup" ng-repeat="widgetGroup in vm.dashboard.WidgetGroups | filter: { PageNo: vm.activePage }"
+                class="widget-group" ng-click="vm.selectWidgetGroup(widgetGroup);">
+
+                <!-- Single Widget Group Overlay -->
+                <div class="widget-group-overlay" ng-if="widgetGroup.isInitializing" style="display: flex; justify-content: center; cursor: progress">
+                  <div as-ui-loading class="loading-2x" style="align-self: center"></div>
+                </div>
+
+                <!-- Widget Group Header -->
+                <div class="widget-group-header headerSetting drag-handler">
+                  <div class="col-xs-9" id="icons" style="padding-left: 3px !important; white-space: nowrap">
+                    <div ng-if="widgetGroup.Icon.Value" style="vertical-align: middle; display: inline-block;" class="icon {{widgetGroup.Icon.Value}}"></div>
+                    <div style="vertical-align: middle; text-overflow: ellipsis; overflow: hidden; display: inline-block; white-space: nowrap; max-width: 100%;"
+                      class="caps widget-group-title">&nbsp;{{widgetGroup.Title}}<span ng-if="widgetGroup.Title">&nbsp;-</span>&nbsp;{{widgetGroup.DateRange.ValueTranslated}}</div>
+                  </div>
+                  <div class="col-xs-3 widget-group-header-controls widget-group-title">
+                    <a class="mdi mdi-18px mdi-settings" ng-click="vm.openWidgetGroupSettings(widgetGroup, 'data-settings')"></a>
+                    <a title="Menu" uib-popover-template="'widget-group-popover-template.html'" popover-trigger="'outsideClick'" popover-is-open="widgetGroup.isMenuOpen"
+                      popover-placement="bottom-right" class="glyphicon glyphicon-option-vertical"></a>
+                  </div>
+                  <div style="clear: both"></div>
+                </div>
+
+                <!-- No widgets  -->
+                <div class="widget-group-no-widgets-container center-content" ng-if="!widgetGroup.Widgets || widgetGroup.Widgets.length === 0">
+                  <div style="display: inline-block; text-align: center">
+                    <div class="sub-header" style="margin-bottom: 5px;">You have no widgets</div>
+                    <div class="sub-header" style="margin-bottom:22px;">Add Widget to get started</div>
+                    <div style="display: inline-block; cursor: pointer; margin-bottom: 5px;" ng-click="vm.openWidgetGroupSettings(null, 'data-settings')"
+                      class="material-button button-green">
+                      <i class="mdi mdi-24px mdi-plus"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Widget Group Body -->
+                <gridster options="widgetGroup.widgetGroupOptions" class="widgets-gridster widget" ng-if="widgetGroup.Widgets && widgetGroup.Widgets.length > 0">
+
+                  <!--Widget-->
+                  <gridster-item item="widget" ng-repeat="widget in widgetGroup.Widgets" class="widget-container">
+
+                    <!--Header -->
+                    <div class="widget-header">
+                      <div class="widget-header-title">{{widget.Title}}</div>
+                      <div class="widget-header-actions">
+                        <a title="Settings" ng-click="vm.openWidgetSetting(widgetGroup,widget)" class="mdi mdi-18px mdi-settings"></a>
+                        <a title="Delete" ng-click="vm.deleteWidget(widgetGroup, widget)" class="mdi mdi-18px mdi-delete"></a>
+                      </div>
+                      <div style="clear: both"></div>
+                    </div>
+
+                    <!--Widget Body-->
+                    <div style="height: calc(100% - 31px); width: 100%;">
+                      <div class="widget-body" widget-body widget="widget" style="height: 100%" ng-dblClick="vm.openWidgetSetting(widgetGroup,widget)"></div>
+                    </div>
+
+                  </gridster-item>
+
+                </gridster>
+
+              </gridster-item>
+
+            </gridster>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="./lib/js_modules/angular-gridster2/gridster.js" type="text/javascript"></script>
+  <script>
+    angular
+      .module('app', [ 'angular-gridster2' ])
+      .controller('mainCtrl', mainCtrl)
+
+    function mainCtrl()
+    {
+      const vm = this;
+
+      vm.options = {
+        gridType: 'fixed',
+        fixedColWidth: 150,
+        fixedRowHeight: 150,
+        maxCols: 8,
+        margin: 4,
+        minItemRows: 2,
+        minItemCols: 2,
+        itemChangeCallback: vm.itemChange,
+        outerMargin: true,
+        draggable: {
+          enabled: true,
+          ignoreContent: true,
+          dragHandleClass: 'drag-handler'
+        },
+        resizable: {
+          enabled: true,
+          stop: function (widgetGroup)
+          {
+            if (widgetGroup.widgetGroupOptions.api)
+            {
+              widgetGroup.widgetGroupOptions.api.resize();
+            }
           }
-        };
-
-        vm.itemchange = () => {
-          console.log("Item moved!");
         }
+      };
 
-        vm.dashboard = [
-          { cols: 2, rows: 1, y: 0, x: 0 },
-          { cols: 2, rows: 2, y: 0, x: 2 }
-        ]
+      vm.itemchange = () =>
+      {
+        console.log("Item moved!");
       }
-    </script>
-  </body>
+
+      vm.dashboard = [
+        { cols: 2, rows: 1, y: 0, x: 0 },
+        { cols: 2, rows: 2, y: 0, x: 2 }
+      ]
+    }
+  </script>
+</body>
+
 </html>

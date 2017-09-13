@@ -7,8 +7,8 @@
     .constant("PRODUCT_LIST_PAGE_COUNT", 3)
     .controller('ProductListCtrl', ProductListCtrl);
 
-  ProductListCtrl.$inject = ['$scope', '$filter', 'PRODUCT_LIST_ACTIVE_CLASS', 'PRODUCT_LIST_PAGE_COUNT'];
-  function ProductListCtrl($scope, $filter, PRODUCT_LIST_ACTIVE_CLASS, PRODUCT_LIST_PAGE_COUNT) {
+  ProductListCtrl.$inject = ['$scope', '$filter', 'PRODUCT_LIST_ACTIVE_CLASS', 'PRODUCT_LIST_PAGE_COUNT', 'CartService'];
+  function ProductListCtrl($scope, $filter, PRODUCT_LIST_ACTIVE_CLASS, PRODUCT_LIST_PAGE_COUNT, CartService) {
     var vm = this;
 
     let selectedCategory = null;
@@ -28,5 +28,7 @@
     vm.getCategoryClass = (category) => selectedCategory === category ? PRODUCT_LIST_ACTIVE_CLASS : "";
 
     vm.getPageClass = (page) => vm.selectedPage === page ? PRODUCT_LIST_ACTIVE_CLASS : "";
+
+    vm.addProductToCart = (product) => CartService.addProduct(product.id, product.name, product.price);
   }
 })();
