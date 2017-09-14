@@ -25,6 +25,6 @@
       .state("placeorder", {
         url: "/placeorder",
         templateUrl: "./app/shared/_place-order.html"
-      });
+      })
   }
 })();
