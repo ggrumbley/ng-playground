@@ -3,7 +3,6 @@
 
   angular
     .module("app")
-    .constant("ROOT_URL", "http://localhost:3000")
     .controller("SportsStoreCtrl", SportsStoreCtrl);
 
   SportsStoreCtrl.$inject = [

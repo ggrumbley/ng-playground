@@ -44,13 +44,6 @@
     },
     {
       "category": "Chess",
-      "description": "Secretly give your opponent a disadvantage",
-      "name": "Unsteady Chair",
-      "price": 29.95,
-      "id": "32c2355f9a617bbd"
-    },
-    {
-      "category": "Chess",
       "description": "A fun game for the family",
       "name": "Human Chess Board",
       "price": 75,
@@ -60,8 +53,15 @@
       "category": "Chess",
       "description": "Gold-plated, diamond-studded King",
       "name": "Bling-Bling King",
-      "price": 1200,
+      "price": "30000",
       "id": "59166228d70f8858"
+    },
+    {
+      "name": "Baseball Bat",
+      "description": "Whack a ball",
+      "category": "Baseball",
+      "price": "160",
+      "id": "SJ8IuOO9Z"
     }
   ],
   "orders": [
@@ -171,6 +171,29 @@
         }
       ],
       "id": 5
+    },
+    {
+      "name": "asda",
+      "street": "ad",
+      "state": "ad",
+      "city": "zz",
+      "zip": "zz",
+      "country": "zz",
+      "products": [
+        {
+          "count": 2,
+          "id": "3d31d81b218c98ef",
+          "price": 48.95,
+          "name": "Lifejacket"
+        },
+        {
+          "count": 3,
+          "id": "05af70919155f8fc",
+          "price": 275,
+          "name": "Kayak"
+        }
+      ],
+      "id": 6
     }
   ],
   "users": []

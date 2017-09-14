@@ -1,0 +1,42 @@
+<div ng-controller="ProductCtrl as pc">
+  <table id="productTable" class="table table-striped table-bordered">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="item in pc.products" ng-hide="item.id == pc.editedProduct.id">
+      <td>{{item.name}}</td>
+      <td class="description">{{item.description}}</td>
+      <td>{{item.category}}</td>
+      <td>{{item.price | currency}}</td>
+      <td>
+        <button ng-click="pc.startEdit(item)" class="btn btn-xs btn-primary">
+          Edit
+        </button>
+        <button ng-click="pc.deleteProduct(item)" class="btn btn-xs btn-primary">
+          Delete
+        </button>
+      </td>
+    </tr>
+    <tr ng-class="{danger: pc.editedProduct}">
+      <td><input ng-model="pc.editedProduct.name" required /></td>
+      <td><input ng-model="pc.editedProduct.description" required /></td>
+      <td><input ng-model="pc.editedProduct.category" required /></td>
+      <td><input ng-model="pc.editedProduct.price" required /></td>
+      <td>
+        <button ng-hide="pc.editedProduct.id" ng-click="pc.createProduct(pc.editedProduct)" class="btn btn-xs btn-primary">
+          Create
+        </button>
+        <button ng-show="pc.editedProduct.id" ng-click="pc.updateProduct(pc.editedProduct)" class="btn btn-xs btn-primary">
+          Save
+        </button>
+        <button ng-show="pc.editedProduct" ng-click="pc.cancelEdit()" class="btn btn-xs btn-primary">
+          Cancel
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

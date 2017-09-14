@@ -2,7 +2,8 @@
   "use strict";
 
   angular
-    .module("app", ["customFilters", "app.cart", "ui.router"])
+    .module("app", ["customFilters", "app.cart", "app.admin", "ui.router"])
+    .constant("ROOT_URL", "http://localhost:3000")
     .config(configFunc);
 
   function configFunc($stateProvider, $urlRouterProvider) {
@@ -12,19 +13,64 @@
     $stateProvider
       .state("checkout", {
         url: "/checkout",
-        templateUrl: "./app/checkout/_checkout-summary.html"
+        views: {
+          'header': {
+            templateUrl: "./app/shared/_header.html"
+          },
+          'content': {
+            templateUrl: "./app/checkout/_checkout-summary.html"
+          }
+        }
       })
       .state("products", {
         url: "/products",
-        templateUrl: "./app/product-list/_product-list.html"
+        views: {
+          'header': {
+            templateUrl: "./app/shared/_header.html"
+          },
+          'content': {
+            templateUrl: "./app/product-list/_product-list.html"
+          }
+        }
       })
       .state("complete", {
         url: "/complete",
-        templateUrl: "./app/shared/_thank-you.html"
+        views: {
+          'header': {
+            templateUrl: "./app/shared/_header.html"
+          },
+          'content': {
+            templateUrl: "./app/shared/_thank-you.html"
+          }
+        }
       })
       .state("placeorder", {
         url: "/placeorder",
-        templateUrl: "./app/shared/_place-order.html"
+        views: {
+          'header': {
+            templateUrl: "./app/shared/_header.html"
+          },
+          'content': {
+            templateUrl: "./app/shared/_place-order.html"
+          }
+        }
       })
+      .state("admin", {
+        url: '/admin',
+        views: {
+          'content': {
+            templateUrl: "./app/admin/_admin.html"
+          }
+        }
+      })
+      .state("login", {
+        url: '/admin/login',
+        views: {
+          'content': {
+            templateUrl: "./app/admin/_login.html"
+          }
+        }
+      })
+
   }
 })();

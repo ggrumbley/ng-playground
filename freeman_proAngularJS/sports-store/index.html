@@ -8,28 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body ng-controller="SportsStoreCtrl as vm">
-    <div class="navbar navbar-inverse">
-      <a href="#" class="navbar-brand">SPORTS STORE</a>
-      <cart-summary />
+
+    <div ui-view="header"></div>
+    <div ui-view="content"></div>
+
     </div>
-
-    <div class="alert alert-danger" ng-show ="vm.data.error">
-      Error ({{vm.data.error.status}}). The product data was not loaded.
-      <a href="/index.html" class="alert-link">Click here to try again</a>
-    </div>
-
-    <ui-view />
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.6.6/angular-resource.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
 
     <script src="./app/app.module.js"></script>
+    <script src="./app/admin/admin.module.js"></script>
+    <script src="./app/admin/admin.ctrl.js"></script>
+    <script src="./app/admin/admin-product.ctrl.js"></script>
     <script src="./app/shared/unique.filter.js"></script>
     <script src="./app/sports-store.ctrl.js"></script>
     <script src="./app/product-list/product-list.ctrl.js"></script>
     <script src="./app/checkout/checkout-summary.ctrl.js"></script>
     <script src="./app/cart/cart.js"></script>
-    <script src="./app/admin/admin.module.js"></script>
   </body>
 </html>
