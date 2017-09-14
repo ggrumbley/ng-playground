@@ -63,5 +63,30 @@
       "price": 1200,
       "id": "59166228d70f8858"
     }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "name": "",
+      "street": "",
+      "city": "",
+      "state": "",
+      "zip": "",
+      "country": "",
+      "giftwrap": false,
+      "products": []
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    }
   ]
 }
