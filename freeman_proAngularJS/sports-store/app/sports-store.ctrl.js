@@ -26,16 +26,16 @@
       );
 
     vm.sendOrder = shippingDetails => {
-      let order = angular.copy(shippingDetails);
+      let order = { ...shippingDetails };
       order.products = CartService.getProducts();
-      console.log(order);
-      $http.post(`${ROOT_URL}/orders`).then((res) => console.log(res.data))
-      // $http.post(`${ROOT_URL}/orders`).then(res => {
-      //   console.log(res.data)
-      //   // vm.data.orderId = res.data.id;
-      //   // CartService.getProducts().length = 0;
-      // }, err => (vm.data.orderError = err.data))
-      // // .then(() => $state.go('complete'));
+
+      $http
+        .post(`${ROOT_URL}/orders`, order)
+        .then(res => {
+          vm.data.orderId = res.data.id;
+          CartService.getProducts().length = 0;
+        }, err => (vm.data.orderError = err.data))
+        .then(() => $state.go("complete"));
     };
   }
 })();
