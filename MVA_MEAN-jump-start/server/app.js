@@ -18,10 +18,15 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(session({
+  secret: 'keyboard cat'
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/auth', authenticate);
 app.use('/api', api);
@@ -32,6 +37,10 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+//// Initialize Passport
+var initPassport = require('./passport-init');
+initPassport(passport);
 
 // error handler
 app.use(function(err, req, res, next) {
