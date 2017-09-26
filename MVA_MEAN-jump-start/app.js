@@ -6,9 +6,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
+const mongoose = require('mongoose');
+
+require('./models/models');
 const api = require('./routes/api');
 const authenticate = require('./routes/authenticate')(passport);
 
+mongoose.connect('mongodb://localhost/tweedle-dev');
 const app = express();
 
 // view engine setup

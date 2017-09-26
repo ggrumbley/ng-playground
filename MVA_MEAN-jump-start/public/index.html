@@ -22,14 +22,31 @@
     </div>
     <!-- BRING IN ALL THE JAVASCRIPTS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.6.6/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
     <script>
       angular
-        .module('app', ['ui.router'])
+        .module('app', ['ui.router', 'ngResource'])
+        .run(runFunc)
+        .factory('postService', postService)
         .config(configFunc)
         .controller('mainCtrl', mainCtrl)
         .controller('authCtrl', authCtrl);
 
+      function runFunc($rootScope) {
+        $rootScope.authenticated = true;
+        $rootScope.current_user = 'Gary';
+
+        $rootScope.signout = () => {
+          $http.get('auth/signout');
+          $rootScope.authenticated = false;
+          $rootScope.current_user = '';
+        };
+      }
+
+      function postService($resource) {
+        return $resource('/api/posts/:id')
+      }
       function configFunc($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/");
 
@@ -51,16 +68,22 @@
           });
       }
 
-      function mainCtrl() {
+      function mainCtrl(postService, $rootScope) {
         const vm = this;
 
-        vm.posts = [];
+        // vm.posts = [];
+        vm.posts = postService.query();
         vm.newPost = {created_by: '', text: '', created_at: ''};
 
         vm.post = () => {
+          vm.newPost.created_by = $rootScope.current_user;
           vm.newPost.created_at = Date.now();
-          vm.posts.push(vm.newPost);
-          vm.newPost = {created_by: '', text: '', created_at: ''};
+          // vm.posts.push(vm.newPost);
+          // vm.newPost = {created_by: '', text: '', created_at: ''};
+          postService.save(vm.newPost, () => {
+            vm.posts = postService.query();
+            vm.newPost = { created_by: '', text: '', created_at: '' };
+          })
         };
       };
 
