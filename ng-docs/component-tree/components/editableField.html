@@ -1,0 +1,6 @@
+<span ng-switch="vm.editMode">
+  <input ng-switch-when="true" type="{{vm.fieldType}}" ng-model="vm.fieldValue">
+  <span ng-switch-default>{{vm.fieldValue}}</span>
+</span>
+<button ng-click="vm.handleModeChange()">{{vm.editMode ? 'Save' : 'Edit'}}</button>
+<button ng-if="vm.editMode" ng-click="vm.reset()">Reset</button>
