@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <title>Component Nav Example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- http://stackoverflow.com/questions/36033940/how-to-pass-data-between-child-component-in-angular-1-5-not-using-scope#36033940 -->
+  <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-HzUaiJdCTIY/RL2vDPRGdEQHHahjzwoJJzGUkYjHVzTwXFQ2QN/nVgX7tzoMW3Ov" crossorigin="anonymous">
+  <style>
+  header-component,
+  main-component {
+    display: block;
+    border: 2px dashed #BBB;
+    background: #F9F9F9;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  pre {
+    margin-top: 15px;
+  }
+  h3, h4 {
+    margin-top: 5px;
+  }
+  </style>
+  <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
+</head>
+<body ng-controller="RootController as root" class="container">
+  <pre>Root view: root.view = {{ root.view }}</pre>
+
+    <header-component view="root.view" on-view-change="root.view = $event.view"></header-component>
+    <main-component view="root.view"></main-component>
+
+<script>
+(function() {
+  'use strict';
+
+  angular
+  .module('app', [])
+  .controller('RootController', function() { this.view = 'table' })
+  .component('mainComponent', {
+    template: `
+      <h4>Main component</h4>
+      Main view: {{ $ctrl.view }}
+    `,
+    bindings: {
+      view: '<'
+    }
+  })
+  .component('headerComponent', {
+    template: `
+      <h3>Header component</h3>
+      <a class="btn btn-default btn-sm" ng-class="{'btn-primary': $ctrl.view === 'list'}" ng-click="$ctrl.setView('list')">List</a>
+      <a class="btn btn-default btn-sm" ng-class="{'btn-primary': $ctrl.view === 'table'}" ng-click="$ctrl.setView('table')">Table</a>
+    `,
+    controller: function() {
+      this.setView = function(view) {
+        this.view = view
+        this.onViewChange({$event: {view: view}})
+      }
+    },
+    bindings: {
+      view: '<',
+      onViewChange: '&'
+    }
+  });
+})();
+</script>
+</body>
+</html>
