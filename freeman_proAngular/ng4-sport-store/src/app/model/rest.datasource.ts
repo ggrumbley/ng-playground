@@ -13,24 +13,52 @@ const PORT = 3500;
 @Injectable()
 export class RestDataSource {
   baseUrl: string;
+  auth_token: string;
 
   constructor(private http: Http) {
     this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
   }
 
+  authenticate(user: string, pass: string): Observable<boolean> {
+    return this.http
+      .request(
+        new Request({
+          method: RequestMethod.Post,
+          url: this.baseUrl + "login",
+          body: { name: user, password: pass }
+        })
+      )
+      .map(res => {
+        const r = res.json();
+        this.auth_token = r.success ? r.token : null;
+        return r.success;
+      });
+  }
+
   getProducts(): Observable<Product[]> {
-    return this.sendRequest(RequestMethod.Get, 'products');
+    return this.sendRequest(RequestMethod.Get, "products");
   }
 
   saveOrder(order: Order): Observable<Order> {
-    return this.sendRequest(RequestMethod.Post, 'orders', order);
+    return this.sendRequest(RequestMethod.Post, "orders", order);
   }
 
-  private sendRequest(verb: RequestMethod, url: string, body?: Product | Order): Observable<Product | Order> {
-    return this.http.request(new Request({
+  private sendRequest(
+    verb: RequestMethod,
+    url: string,
+    body?: Product | Order,
+    auth: boolean = false
+  ): Observable<Product | Product[] | Order | Order[]> {
+    const req = new Request({
       method: verb,
       url: this.baseUrl + url,
       body: body
-    })).map(res => res.json());
+    });
+
+    if (auth && this.auth_token !== null) {
+      req.headers.set('Authorization', `Bearer<${this.auth_token}>`);
+    }
+
+    return this.http.request(req).map(res => res.json());
   }
 }
