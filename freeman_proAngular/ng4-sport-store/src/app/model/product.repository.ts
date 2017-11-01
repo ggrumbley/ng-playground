@@ -21,7 +21,7 @@ export class ProductRepository {
     return this.products.filter(
       p => category === null || category === p.category
     );
-  };
+  }
 
   getProduct = (id: number): Product => this.products.find(p => p.id === id);
 
@@ -36,14 +36,14 @@ export class ProductRepository {
       this.dataSource
         .updateProduct(product)
         .subscribe(p => {
-          this.products.splice(this.products.findIndex(p => p.id === product.id), 1, product);
+          this.products.splice(this.products.findIndex(p => p.id === product.id), 1, product); // tslint:disable-line
         });
     }
   }
 
   deleteProduct(id: number) {
     this.dataSource.deleteProduct(id).subscribe(p => {
-      this.products.splice(this.products.findIndex(p => p.id === id, 1));
+      this.products.splice(this.products.findIndex(p => p.id === id, 1)); // tslint:disable-line
     });
   }
 }

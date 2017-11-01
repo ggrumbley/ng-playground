@@ -24,7 +24,7 @@ export class RestDataSource {
       .request(
         new Request({
           method: RequestMethod.Post,
-          url: this.baseUrl + "login",
+          url: this.baseUrl + 'login',
           body: { name: user, password: pass }
         })
       )
@@ -36,7 +36,7 @@ export class RestDataSource {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.sendRequest(RequestMethod.Get, "products");
+    return this.sendRequest(RequestMethod.Get, 'products');
   }
 
   saveProduct(product: Product): Observable<Product> {
@@ -64,7 +64,7 @@ export class RestDataSource {
   }
 
   saveOrder(order: Order): Observable<Order> {
-    return this.sendRequest(RequestMethod.Post, "orders", order);
+    return this.sendRequest(RequestMethod.Post, 'orders', order);
   }
 
   private sendRequest(

@@ -7,7 +7,7 @@ import { RestDataSource } from './rest.datasource';
 @Injectable()
 export class OrderRepository {
   private orders: Order[] = [];
-  private loaded: boolean = false;
+  private loaded = false;
 
   constructor(private dataSource: RestDataSource) {}
 
@@ -25,7 +25,7 @@ export class OrderRepository {
   saveOrder = (order: Order): Observable<Order> => this.dataSource.saveOrder(order);
 
   updateOrder(order: Order) {
-    this.dataSource.updateOrder(order).subscribe(order => {
+    this.dataSource.updateOrder(order).subscribe(order => { // tslint:disable-line
       this.orders.splice(this.orders.findIndex(o => o.id === order.id), 1, order);
     });
 
