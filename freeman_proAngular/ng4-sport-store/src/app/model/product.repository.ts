@@ -23,12 +23,14 @@ export class ProductRepository {
     );
   }
 
-  getProduct = (id: number): Product => this.products.find(p => p.id === id);
+  getProduct(id: number): Product {
+    return this.products.find(p => p.id === Number(id));
+  }
 
   getCategories = (): string[] => this.categories;
 
   saveProduct(product: Product) {
-    if (product.id === null || product.id === 0) {
+    if (!product.id || Number(product.id) === 0) {
       this.dataSource
         .saveProduct(product)
         .subscribe(p => this.products.push(p));
